@@ -1,0 +1,12 @@
+# Dépendances principales
+pywin32>=306              # Interface COM pour Microsoft Outlook
+reportlab>=4.0.0          # Génération de PDF
+PyPDF2>=3.0.0             # Manipulation et fusion de PDF
+Pillow>=10.0.0            # Traitement d'images (conversion en PDF)
+
+# Dépendances optionnelles
+python-dotenv>=1.0.0      # Gestion des variables d'environnement
+openpyxl>=3.1.0           # Manipulation de fichiers Excel (si besoin)
+
+# Note: tkinter est inclus avec Python par défaut
+# Note: win32com.client fait partie de pywin32
