@@ -426,7 +426,7 @@ class MainWindow:
         help_label.grid(row=2, column=0, columnspan=2, sticky='w', pady=(5, 0))
     
     def create_date_range_row(self, parent, var_from, var_to, row):
-        """Crée une ligne avec deux DateEntry (Du et Au) sur la même ligne"""
+        """Crée une ligne avec deux DateEntry (Du et Au) sur la même ligne - Style Windows 11"""
         # Label "Période :"
         label = tk.Label(parent, text="Période :", anchor=tk.W,
                         font=('Segoe UI', 10), bg=self.COLORS['bg_medium'],
@@ -439,87 +439,154 @@ class MainWindow:
         dates_container.grid_columnconfigure(1, weight=1)
         dates_container.grid_columnconfigure(4, weight=1)
         
+        # Style ttk pour les DateEntry
+        style = ttk.Style()
+        style.theme_use('clam')
+        
+        # Configuration du style DateEntry
+        style.configure('Custom.TEntry',
+                       fieldbackground=self.COLORS['entry_bg'],
+                       background=self.COLORS['entry_bg'],
+                       foreground=self.COLORS['text'],
+                       bordercolor=self.COLORS['entry_border'],
+                       lightcolor=self.COLORS['entry_bg'],
+                       darkcolor=self.COLORS['entry_bg'],
+                       insertcolor=self.COLORS['accent'],
+                       padding=(8, 6))
+        
+        style.map('Custom.TEntry',
+                 bordercolor=[('focus', self.COLORS['accent'])],
+                 lightcolor=[('focus', self.COLORS['accent'])])
+        
         # --- Date Du ---
         tk.Label(dates_container, text="Du :",
                 font=('Segoe UI', 10), bg=self.COLORS['bg_medium'],
-                fg=self.COLORS['text']).grid(row=0, column=0, sticky='w', padx=(0, 5))
+                fg=self.COLORS['text']).grid(row=0, column=0, sticky='w', padx=(0, 8))
         
-        # Bordure Du
-        border_from = tk.Frame(dates_container, bg=self.COLORS['entry_border'])
-        border_from.grid(row=0, column=1, sticky='ew', padx=(0, 10))
+        # Container Du avec bordure arrondie simulée
+        frame_from = tk.Frame(dates_container, bg=self.COLORS['entry_border'], padx=1, pady=1)
+        frame_from.grid(row=0, column=1, sticky='ew', padx=(0, 8))
         
-        date_from = DateEntry(border_from,
+        inner_from = tk.Frame(frame_from, bg=self.COLORS['entry_bg'])
+        inner_from.pack(fill='both', expand=True)
+        
+        date_from = DateEntry(inner_from,
                              textvariable=var_from,
                              font=('Segoe UI', 10),
                              background=self.COLORS['accent'],
-                             foreground='white',
+                             foreground=self.COLORS['text'],
+                             headersbackground=self.COLORS['accent'],
+                             headersforeground='white',
                              selectbackground=self.COLORS['accent'],
                              selectforeground='white',
-                             normalbackground=self.COLORS['entry_bg'],
+                             normalbackground='white',
                              normalforeground=self.COLORS['text'],
+                             weekendbackground='white',
+                             weekendforeground=self.COLORS['text'],
+                             othermonthbackground='#f0f0f0',
+                             othermonthforeground='#999999',
+                             othermonthwebackground='#f0f0f0',
+                             othermonthweforeground='#999999',
                              borderwidth=0,
+                             relief='flat',
                              date_pattern='dd/mm/yyyy',
-                             locale='fr_FR')
-        date_from.grid(row=0, column=0, sticky='ew', ipady=6, ipadx=8, padx=1, pady=1)
+                             locale='fr_FR',
+                             width=12)
+        date_from.pack(fill='x', padx=6, pady=4)
         date_from.delete(0, 'end')
         
-        # Bouton effacer Du
+        # Bouton effacer Du - style moderne
         btn_clear_from = tk.Button(dates_container, text="✕",
                                   command=lambda: var_from.set(""),
                                   font=('Segoe UI', 9),
-                                  bg=self.COLORS['bg_light'],
+                                  bg=self.COLORS['bg_medium'],
                                   fg=self.COLORS['text_secondary'],
-                                  relief=tk.FLAT, width=2, cursor='hand2')
-        btn_clear_from.grid(row=0, column=2, padx=(0, 20))
+                                  activebackground=self.COLORS['bg_light'],
+                                  activeforeground=self.COLORS['text'],
+                                  relief='flat', width=2, cursor='hand2',
+                                  borderwidth=0)
+        btn_clear_from.grid(row=0, column=2, padx=(0, 25))
         
         # --- Date Au ---
         tk.Label(dates_container, text="Au :",
                 font=('Segoe UI', 10), bg=self.COLORS['bg_medium'],
-                fg=self.COLORS['text']).grid(row=0, column=3, sticky='w', padx=(0, 5))
+                fg=self.COLORS['text']).grid(row=0, column=3, sticky='w', padx=(0, 8))
         
-        # Bordure Au
-        border_to = tk.Frame(dates_container, bg=self.COLORS['entry_border'])
-        border_to.grid(row=0, column=4, sticky='ew', padx=(0, 10))
+        # Container Au avec bordure
+        frame_to = tk.Frame(dates_container, bg=self.COLORS['entry_border'], padx=1, pady=1)
+        frame_to.grid(row=0, column=4, sticky='ew', padx=(0, 8))
         
-        date_to = DateEntry(border_to,
+        inner_to = tk.Frame(frame_to, bg=self.COLORS['entry_bg'])
+        inner_to.pack(fill='both', expand=True)
+        
+        date_to = DateEntry(inner_to,
                            textvariable=var_to,
                            font=('Segoe UI', 10),
                            background=self.COLORS['accent'],
-                           foreground='white',
+                           foreground=self.COLORS['text'],
+                           headersbackground=self.COLORS['accent'],
+                           headersforeground='white',
                            selectbackground=self.COLORS['accent'],
                            selectforeground='white',
-                           normalbackground=self.COLORS['entry_bg'],
+                           normalbackground='white',
                            normalforeground=self.COLORS['text'],
+                           weekendbackground='white',
+                           weekendforeground=self.COLORS['text'],
+                           othermonthbackground='#f0f0f0',
+                           othermonthforeground='#999999',
+                           othermonthwebackground='#f0f0f0',
+                           othermonthweforeground='#999999',
                            borderwidth=0,
+                           relief='flat',
                            date_pattern='dd/mm/yyyy',
-                           locale='fr_FR')
-        date_to.grid(row=0, column=0, sticky='ew', ipady=6, ipadx=8, padx=1, pady=1)
+                           locale='fr_FR',
+                           width=12)
+        date_to.pack(fill='x', padx=6, pady=4)
         date_to.delete(0, 'end')
         
-        # Bouton effacer Au
+        # Bouton effacer Au - style moderne
         btn_clear_to = tk.Button(dates_container, text="✕",
                                 command=lambda: var_to.set(""),
                                 font=('Segoe UI', 9),
-                                bg=self.COLORS['bg_light'],
+                                bg=self.COLORS['bg_medium'],
                                 fg=self.COLORS['text_secondary'],
-                                relief=tk.FLAT, width=2, cursor='hand2')
+                                activebackground=self.COLORS['bg_light'],
+                                activeforeground=self.COLORS['text'],
+                                relief='flat', width=2, cursor='hand2',
+                                borderwidth=0)
         btn_clear_to.grid(row=0, column=5)
         
-        # Effets focus
-        def make_focus_handlers(border):
+        # Effets focus - change la bordure en bleu
+        def make_focus_handlers(frame):
             def on_focus_in(e):
-                border.configure(bg=self.COLORS['accent'])
+                frame.configure(bg=self.COLORS['accent'])
             def on_focus_out(e):
-                border.configure(bg=self.COLORS['entry_border'])
+                frame.configure(bg=self.COLORS['entry_border'])
             return on_focus_in, on_focus_out
         
-        fi_from, fo_from = make_focus_handlers(border_from)
+        fi_from, fo_from = make_focus_handlers(frame_from)
         date_from.bind('<FocusIn>', fi_from)
         date_from.bind('<FocusOut>', fo_from)
         
-        fi_to, fo_to = make_focus_handlers(border_to)
+        fi_to, fo_to = make_focus_handlers(frame_to)
         date_to.bind('<FocusIn>', fi_to)
         date_to.bind('<FocusOut>', fo_to)
+        
+        # Effets hover sur les boutons
+        def make_hover_handlers(btn):
+            def on_enter(e):
+                btn.configure(bg=self.COLORS['bg_light'], fg=self.COLORS['error'])
+            def on_leave(e):
+                btn.configure(bg=self.COLORS['bg_medium'], fg=self.COLORS['text_secondary'])
+            return on_enter, on_leave
+        
+        enter_from, leave_from = make_hover_handlers(btn_clear_from)
+        btn_clear_from.bind('<Enter>', enter_from)
+        btn_clear_from.bind('<Leave>', leave_from)
+        
+        enter_to, leave_to = make_hover_handlers(btn_clear_to)
+        btn_clear_to.bind('<Enter>', enter_to)
+        btn_clear_to.bind('<Leave>', leave_to)
         
         return date_from, date_to
 

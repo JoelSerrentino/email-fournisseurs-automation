@@ -3,5 +3,7 @@
     "keywords": "facture",
     "output_folder": "C:/Test informatique Lancy (BAL)/Emails PDFs",
     "outlook_folder": "\\\\Test informatique Lancy\\Boîte de réception\\Fournisseurs",
-    "category": "Succès"
+    "category": "Succès",
+    "date_from": "",
+    "date_to": ""
 }
