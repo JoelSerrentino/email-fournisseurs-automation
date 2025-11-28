@@ -5,3 +5,302 @@
 2025-11-27 19:05:29 - Application started.
 2025-11-27 19:10:34 - Application started.
 2025-11-27 19:30:42 - INFO - Application started.
+2025-11-28 08:13:01 - INFO - Application started.
+2025-11-28 08:27:42 - INFO - Application started.
+2025-11-28 08:27:59 - INFO - Connexion à Outlook établie
+2025-11-28 08:27:59 - INFO - Mots clés: facture
+2025-11-28 08:28:00 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 08:28:00 - DEBUG - Email correspondant trouvé: Facture du mois de novembre
+2025-11-28 08:28:00 - DEBUG - Email correspondant trouvé: Test factures
+2025-11-28 08:28:00 - DEBUG - Email correspondant trouvé: Factures : avril 2025
+2025-11-28 08:28:00 - INFO - 3 email(s) correspondant(s) trouvé(s)
+2025-11-28 08:28:00 - INFO - 3 email(s) à traiter
+2025-11-28 08:28:01 - INFO - Traitement: Facture du mois de novembre
+2025-11-28 08:28:01 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_gnmaw8pq\email_20251128082801186015\Document1.docx
+2025-11-28 08:28:01 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:28:01 - WARNING - Type de fichier non supporté: .docx
+2025-11-28 08:28:02 - DEBUG - Email déplacé: Facture du mois de novembre
+2025-11-28 08:28:02 - ERROR - Erreur définition catégorie: (-2147352567, 'Une exception s’est produite.', (4096, 'Microsoft Outlook', "Echec de l'opération du client.", None, 0, -2147221233), None)
+2025-11-28 08:28:02 - ERROR - Erreur Outlook: Impossible de définir la catégorie: (-2147352567, 'Une exception s’est produite.', (4096, 'Microsoft Outlook', "Echec de l'opération du client.", None, 0, -2147221233), None)
+2025-11-28 08:28:03 - INFO - Traitement: Test factures
+2025-11-28 08:28:03 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_gnmaw8pq\email_20251128082803261678\Test factures.pdf
+2025-11-28 08:28:03 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:28:03 - DEBUG - PDF ajouté: Test factures.pdf
+2025-11-28 08:28:05 - DEBUG - Email déplacé: Test factures
+2025-11-28 08:28:05 - ERROR - Erreur définition catégorie: (-2147352567, 'Une exception s’est produite.', (4096, 'Microsoft Outlook', "Echec de l'opération du client.", None, 0, -2147221233), None)
+2025-11-28 08:28:05 - ERROR - Erreur Outlook: Impossible de définir la catégorie: (-2147352567, 'Une exception s’est produite.', (4096, 'Microsoft Outlook', "Echec de l'opération du client.", None, 0, -2147221233), None)
+2025-11-28 08:28:06 - INFO - Traitement: Factures : avril 2025
+2025-11-28 08:28:06 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_gnmaw8pq\email_20251128082806075436\Facture d’entreprise de base1.pdf
+2025-11-28 08:28:06 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:28:06 - DEBUG - PDF ajouté: Facture d’entreprise de base1.pdf
+2025-11-28 08:28:07 - DEBUG - Email déplacé: Factures : avril 2025
+2025-11-28 08:28:08 - ERROR - Erreur définition catégorie: (-2147352567, 'Une exception s’est produite.', (4096, 'Microsoft Outlook', "Echec de l'opération du client.", None, 0, -2147221233), None)
+2025-11-28 08:28:08 - ERROR - Erreur Outlook: Impossible de définir la catégorie: (-2147352567, 'Une exception s’est produite.', (4096, 'Microsoft Outlook', "Echec de l'opération du client.", None, 0, -2147221233), None)
+2025-11-28 08:28:08 - INFO - Traitement terminé: 0/3 succès, 3 échec(s)
+2025-11-28 08:33:14 - INFO - Application started.
+2025-11-28 08:33:43 - INFO - Connexion à Outlook établie
+2025-11-28 08:33:43 - INFO - Mots clés: facture
+2025-11-28 08:33:43 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 08:33:44 - DEBUG - Email correspondant trouvé: Facture du mois de novembre
+2025-11-28 08:33:44 - DEBUG - Email correspondant trouvé: Test factures
+2025-11-28 08:33:44 - DEBUG - Email correspondant trouvé: Factures : avril 2025
+2025-11-28 08:33:44 - INFO - 3 email(s) correspondant(s) trouvé(s)
+2025-11-28 08:33:44 - INFO - 3 email(s) à traiter
+2025-11-28 08:33:44 - INFO - Traitement: Facture du mois de novembre
+2025-11-28 08:33:44 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_u22w6y1k\email_20251128083344137264\Document1.docx
+2025-11-28 08:33:44 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:33:44 - WARNING - Type de fichier non supporté: .docx
+2025-11-28 08:33:44 - DEBUG - Catégorie 'Traité' appliquée à: Facture du mois de novembre
+2025-11-28 08:33:45 - DEBUG - Email déplacé: Facture du mois de novembre
+2025-11-28 08:33:45 - INFO - Email traité avec succès: Facture du mois de novembre
+2025-11-28 08:33:46 - INFO - Traitement: Test factures
+2025-11-28 08:33:46 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_u22w6y1k\email_20251128083346529948\Test factures.pdf
+2025-11-28 08:33:46 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:33:47 - DEBUG - PDF ajouté: Test factures.pdf
+2025-11-28 08:33:47 - DEBUG - Catégorie 'Traité' appliquée à: Test factures
+2025-11-28 08:33:48 - DEBUG - Email déplacé: Test factures
+2025-11-28 08:33:48 - INFO - Email traité avec succès: Test factures
+2025-11-28 08:33:48 - INFO - Traitement: Factures : avril 2025
+2025-11-28 08:33:49 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_u22w6y1k\email_20251128083348877916\Facture d’entreprise de base1.pdf
+2025-11-28 08:33:49 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:33:49 - DEBUG - PDF ajouté: Facture d’entreprise de base1.pdf
+2025-11-28 08:33:49 - DEBUG - Catégorie 'Traité' appliquée à: Factures : avril 2025
+2025-11-28 08:33:50 - DEBUG - Email déplacé: Factures : avril 2025
+2025-11-28 08:33:50 - INFO - Email traité avec succès: Factures : avril 2025
+2025-11-28 08:33:50 - INFO - Traitement terminé: 3/3 succès, 0 échec(s)
+2025-11-28 08:44:06 - INFO - Application started.
+2025-11-28 08:44:44 - INFO - Connexion à Outlook établie
+2025-11-28 08:44:44 - INFO - Catégorie 'Succès' créée avec la couleur green
+2025-11-28 08:44:44 - INFO - Catégorie 'Erreur traitement' créée avec la couleur red
+2025-11-28 08:44:44 - INFO - Mots clés: facture
+2025-11-28 08:44:45 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 08:44:45 - DEBUG - Email correspondant trouvé: Facture octobre
+2025-11-28 08:44:45 - DEBUG - Email correspondant trouvé: Facture avec TVA1.xlsx
+2025-11-28 08:44:45 - DEBUG - Email correspondant trouvé: Facture du mois de novembre
+2025-11-28 08:44:45 - DEBUG - Email correspondant trouvé: Test factures
+2025-11-28 08:44:45 - DEBUG - Email correspondant trouvé: Factures : avril 2025
+2025-11-28 08:44:45 - INFO - 5 email(s) correspondant(s) trouvé(s)
+2025-11-28 08:44:45 - INFO - 5 email(s) à traiter
+2025-11-28 08:44:45 - INFO - Traitement: Facture octobre
+2025-11-28 08:44:45 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_9m8q39kc\email_20251128084445717094\image001.png
+2025-11-28 08:44:45 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:44:46 - DEBUG - Image convertie: image001.png
+2025-11-28 08:44:46 - DEBUG - Catégorie 'Succès' appliquée à: Facture octobre
+2025-11-28 08:44:47 - DEBUG - Email déplacé: Facture octobre
+2025-11-28 08:44:47 - INFO - Email traité avec succès: Facture octobre
+2025-11-28 08:44:49 - INFO - Traitement: Facture avec TVA1.xlsx
+2025-11-28 08:44:50 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_9m8q39kc\email_20251128084449972282\Facture avec TVA1.xlsx
+2025-11-28 08:44:50 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:44:51 - ERROR - Erreur COM lors de la conversion Excel: (-2147352567, 'Une exception s’est produite.', (0, None, None, None, 0, -2147024809), None)
+2025-11-28 08:44:54 - DEBUG - Catégorie 'Succès' appliquée à: Facture avec TVA1.xlsx
+2025-11-28 08:44:55 - DEBUG - Email déplacé: Facture avec TVA1.xlsx
+2025-11-28 08:44:55 - INFO - Email traité avec succès: Facture avec TVA1.xlsx
+2025-11-28 08:44:55 - INFO - Traitement: Facture du mois de novembre
+2025-11-28 08:44:56 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_9m8q39kc\email_20251128084455984263\Document1.docx
+2025-11-28 08:44:56 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:44:57 - DEBUG - Word converti en PDF: Document1.docx
+2025-11-28 08:44:57 - DEBUG - Document Word converti: Document1.docx
+2025-11-28 08:44:57 - DEBUG - Catégorie 'Succès' appliquée à: Facture du mois de novembre
+2025-11-28 08:44:58 - DEBUG - Email déplacé: Facture du mois de novembre
+2025-11-28 08:44:58 - INFO - Email traité avec succès: Facture du mois de novembre
+2025-11-28 08:44:59 - INFO - Traitement: Test factures
+2025-11-28 08:44:59 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_9m8q39kc\email_20251128084459511308\Test factures.pdf
+2025-11-28 08:44:59 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:44:59 - DEBUG - PDF ajouté: Test factures.pdf
+2025-11-28 08:45:00 - DEBUG - Catégorie 'Succès' appliquée à: Test factures
+2025-11-28 08:45:01 - DEBUG - Email déplacé: Test factures
+2025-11-28 08:45:01 - INFO - Email traité avec succès: Test factures
+2025-11-28 08:45:01 - INFO - Traitement: Factures : avril 2025
+2025-11-28 08:45:01 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_9m8q39kc\email_20251128084501546196\Facture d’entreprise de base1.pdf
+2025-11-28 08:45:01 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:45:01 - DEBUG - PDF ajouté: Facture d’entreprise de base1.pdf
+2025-11-28 08:45:02 - DEBUG - Catégorie 'Succès' appliquée à: Factures : avril 2025
+2025-11-28 08:45:03 - DEBUG - Email déplacé: Factures : avril 2025
+2025-11-28 08:45:03 - INFO - Email traité avec succès: Factures : avril 2025
+2025-11-28 08:45:03 - INFO - Traitement terminé: 5/5 succès, 0 échec(s)
+2025-11-28 08:50:18 - INFO - Application started.
+2025-11-28 08:50:36 - INFO - Connexion à Outlook établie
+2025-11-28 08:50:36 - INFO - Mots clés: facture
+2025-11-28 08:50:36 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 08:50:36 - DEBUG - Email correspondant trouvé: Facture octobre
+2025-11-28 08:50:36 - DEBUG - Email correspondant trouvé: Facture avec TVA1.xlsx
+2025-11-28 08:50:36 - DEBUG - Email correspondant trouvé: Facture du mois de novembre
+2025-11-28 08:50:36 - DEBUG - Email correspondant trouvé: Test factures
+2025-11-28 08:50:36 - DEBUG - Email correspondant trouvé: Factures : avril 2025
+2025-11-28 08:50:36 - INFO - 5 email(s) correspondant(s) trouvé(s)
+2025-11-28 08:50:36 - INFO - 5 email(s) à traiter
+2025-11-28 08:50:36 - INFO - Traitement: Facture octobre
+2025-11-28 08:50:37 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_5y0qheb4\email_20251128085037064784\image001.png
+2025-11-28 08:50:37 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:50:37 - DEBUG - Image convertie: image001.png
+2025-11-28 08:50:37 - DEBUG - Catégorie 'Succès' appliquée à: Facture octobre
+2025-11-28 08:50:38 - DEBUG - Email déplacé: Facture octobre
+2025-11-28 08:50:38 - INFO - Email traité avec succès: Facture octobre
+2025-11-28 08:50:39 - INFO - Traitement: Facture avec TVA1.xlsx
+2025-11-28 08:50:39 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_5y0qheb4\email_20251128085039472172\Facture avec TVA1.xlsx
+2025-11-28 08:50:39 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:50:45 - DEBUG - Excel converti en PDF: Facture avec TVA1.xlsx
+2025-11-28 08:50:49 - DEBUG - Document Excel converti: Facture avec TVA1.xlsx
+2025-11-28 08:50:49 - DEBUG - Catégorie 'Succès' appliquée à: Facture avec TVA1.xlsx
+2025-11-28 08:50:50 - DEBUG - Email déplacé: Facture avec TVA1.xlsx
+2025-11-28 08:50:50 - INFO - Email traité avec succès: Facture avec TVA1.xlsx
+2025-11-28 08:50:51 - INFO - Traitement: Facture du mois de novembre
+2025-11-28 08:50:51 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_5y0qheb4\email_20251128085051521016\Document1.docx
+2025-11-28 08:50:51 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:50:51 - ERROR - Erreur conversion Word: Open.ExportAsFixedFormat
+2025-11-28 08:50:52 - DEBUG - Catégorie 'Succès' appliquée à: Facture du mois de novembre
+2025-11-28 08:50:53 - DEBUG - Email déplacé: Facture du mois de novembre
+2025-11-28 08:50:53 - INFO - Email traité avec succès: Facture du mois de novembre
+2025-11-28 08:50:53 - INFO - Traitement: Test factures
+2025-11-28 08:50:54 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_5y0qheb4\email_20251128085053979716\Test factures.pdf
+2025-11-28 08:50:54 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:50:54 - DEBUG - PDF ajouté: Test factures.pdf
+2025-11-28 08:50:54 - DEBUG - Catégorie 'Succès' appliquée à: Test factures
+2025-11-28 08:50:55 - DEBUG - Email déplacé: Test factures
+2025-11-28 08:50:55 - INFO - Email traité avec succès: Test factures
+2025-11-28 08:50:56 - INFO - Traitement: Factures : avril 2025
+2025-11-28 08:50:56 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_5y0qheb4\email_20251128085056193105\Facture d’entreprise de base1.pdf
+2025-11-28 08:50:56 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:50:56 - DEBUG - PDF ajouté: Facture d’entreprise de base1.pdf
+2025-11-28 08:50:56 - DEBUG - Catégorie 'Succès' appliquée à: Factures : avril 2025
+2025-11-28 08:50:57 - DEBUG - Email déplacé: Factures : avril 2025
+2025-11-28 08:50:57 - INFO - Email traité avec succès: Factures : avril 2025
+2025-11-28 08:50:57 - INFO - Traitement terminé: 5/5 succès, 0 échec(s)
+2025-11-28 08:55:47 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 08:55:47 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 08:55:47 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 08:55:55 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 08:55:55 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 08:55:55 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 08:56:57 - INFO - Application started.
+2025-11-28 08:57:07 - INFO - Connexion à Outlook établie
+2025-11-28 08:57:07 - INFO - Mots clés: facture
+2025-11-28 08:57:08 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 08:57:08 - DEBUG - Email correspondant trouvé: Facture octobre
+2025-11-28 08:57:08 - DEBUG - Email correspondant trouvé: Facture avec TVA1.xlsx
+2025-11-28 08:57:08 - DEBUG - Email correspondant trouvé: Facture du mois de novembre
+2025-11-28 08:57:08 - DEBUG - Email correspondant trouvé: Test factures
+2025-11-28 08:57:08 - DEBUG - Email correspondant trouvé: Factures : avril 2025
+2025-11-28 08:57:08 - INFO - 5 email(s) correspondant(s) trouvé(s)
+2025-11-28 08:57:08 - INFO - 5 email(s) à traiter
+2025-11-28 08:57:08 - INFO - Traitement: Facture octobre
+2025-11-28 08:57:08 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_kr18ohor\email_20251128085708580810\image001.png
+2025-11-28 08:57:08 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:57:08 - DEBUG - Image convertie: image001.png
+2025-11-28 08:57:09 - DEBUG - Catégorie 'Succès' appliquée à: Facture octobre
+2025-11-28 08:57:10 - DEBUG - Email déplacé: Facture octobre
+2025-11-28 08:57:10 - INFO - Email traité avec succès: Facture octobre
+2025-11-28 08:57:10 - INFO - Traitement: Facture avec TVA1.xlsx
+2025-11-28 08:57:11 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_kr18ohor\email_20251128085711135598\Facture avec TVA1.xlsx
+2025-11-28 08:57:11 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:57:17 - DEBUG - Excel converti en PDF: Facture avec TVA1.xlsx
+2025-11-28 08:57:20 - DEBUG - Document Excel converti: Facture avec TVA1.xlsx
+2025-11-28 08:57:20 - DEBUG - Catégorie 'Succès' appliquée à: Facture avec TVA1.xlsx
+2025-11-28 08:57:22 - DEBUG - Email déplacé: Facture avec TVA1.xlsx
+2025-11-28 08:57:22 - INFO - Email traité avec succès: Facture avec TVA1.xlsx
+2025-11-28 08:57:22 - INFO - Traitement: Facture du mois de novembre
+2025-11-28 08:57:22 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_kr18ohor\email_20251128085722593822\Document1.docx
+2025-11-28 08:57:22 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:57:23 - ERROR - Erreur conversion Word: Open.ExportAsFixedFormat
+2025-11-28 08:57:23 - DEBUG - Catégorie 'Succès' appliquée à: Facture du mois de novembre
+2025-11-28 08:57:24 - DEBUG - Email déplacé: Facture du mois de novembre
+2025-11-28 08:57:24 - INFO - Email traité avec succès: Facture du mois de novembre
+2025-11-28 08:57:24 - INFO - Traitement: Test factures
+2025-11-28 08:57:25 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_kr18ohor\email_20251128085725060690\Test factures.pdf
+2025-11-28 08:57:25 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:57:25 - DEBUG - PDF ajouté: Test factures.pdf
+2025-11-28 08:57:25 - DEBUG - Catégorie 'Succès' appliquée à: Test factures
+2025-11-28 08:57:26 - DEBUG - Email déplacé: Test factures
+2025-11-28 08:57:26 - INFO - Email traité avec succès: Test factures
+2025-11-28 08:57:26 - INFO - Traitement: Factures : avril 2025
+2025-11-28 08:57:27 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_kr18ohor\email_20251128085726912358\Facture d’entreprise de base1.pdf
+2025-11-28 08:57:27 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 08:57:27 - DEBUG - PDF ajouté: Facture d’entreprise de base1.pdf
+2025-11-28 08:57:27 - DEBUG - Catégorie 'Succès' appliquée à: Factures : avril 2025
+2025-11-28 08:57:28 - DEBUG - Email déplacé: Factures : avril 2025
+2025-11-28 08:57:28 - INFO - Email traité avec succès: Factures : avril 2025
+2025-11-28 08:57:28 - INFO - Traitement terminé: 5/5 succès, 0 échec(s)
+2025-11-28 09:15:29 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:15:29 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:15:29 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 09:15:32 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:15:32 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:15:32 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 09:15:58 - INFO - Application started.
+2025-11-28 09:16:05 - INFO - Connexion à Outlook établie
+2025-11-28 09:16:05 - INFO - Mots clés: facture
+2025-11-28 09:16:05 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 09:16:06 - DEBUG - Email correspondant trouvé: Facture octobre
+2025-11-28 09:16:06 - DEBUG - Email correspondant trouvé: Facture avec TVA1.xlsx
+2025-11-28 09:16:06 - DEBUG - Email correspondant trouvé: Facture du mois de novembre
+2025-11-28 09:16:06 - DEBUG - Email correspondant trouvé: Test factures
+2025-11-28 09:16:06 - DEBUG - Email correspondant trouvé: Factures : avril 2025
+2025-11-28 09:16:06 - INFO - 5 email(s) correspondant(s) trouvé(s)
+2025-11-28 09:16:06 - INFO - 5 email(s) à traiter
+2025-11-28 09:16:06 - INFO - Traitement: Facture octobre
+2025-11-28 09:16:06 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_f0qjky5n\email_20251128091606631063\image001.png
+2025-11-28 09:16:06 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:16:06 - DEBUG - Image convertie: image001.png
+2025-11-28 09:16:07 - DEBUG - Catégorie 'Succès' appliquée à: Facture octobre
+2025-11-28 09:16:08 - DEBUG - Email déplacé: Facture octobre
+2025-11-28 09:16:08 - INFO - Email traité avec succès: Facture octobre
+2025-11-28 09:16:08 - INFO - Traitement: Facture avec TVA1.xlsx
+2025-11-28 09:16:08 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_f0qjky5n\email_20251128091608620302\Facture avec TVA1.xlsx
+2025-11-28 09:16:08 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:16:15 - DEBUG - Excel converti en PDF: Facture avec TVA1.xlsx
+2025-11-28 09:16:19 - DEBUG - Document Excel converti: Facture avec TVA1.xlsx
+2025-11-28 09:16:19 - DEBUG - Catégorie 'Succès' appliquée à: Facture avec TVA1.xlsx
+2025-11-28 09:16:20 - DEBUG - Email déplacé: Facture avec TVA1.xlsx
+2025-11-28 09:16:20 - INFO - Email traité avec succès: Facture avec TVA1.xlsx
+2025-11-28 09:16:21 - INFO - Traitement: Facture du mois de novembre
+2025-11-28 09:16:21 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_f0qjky5n\email_20251128091621591640\Document1.docx
+2025-11-28 09:16:21 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:16:26 - DEBUG - Word converti en PDF: Document1.docx
+2025-11-28 09:16:29 - DEBUG - Document Word converti: Document1.docx
+2025-11-28 09:16:30 - DEBUG - Catégorie 'Succès' appliquée à: Facture du mois de novembre
+2025-11-28 09:16:31 - DEBUG - Email déplacé: Facture du mois de novembre
+2025-11-28 09:16:31 - INFO - Email traité avec succès: Facture du mois de novembre
+2025-11-28 09:16:31 - INFO - Traitement: Test factures
+2025-11-28 09:16:32 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_f0qjky5n\email_20251128091631806676\Test factures.pdf
+2025-11-28 09:16:32 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:16:32 - DEBUG - PDF ajouté: Test factures.pdf
+2025-11-28 09:16:32 - DEBUG - Catégorie 'Succès' appliquée à: Test factures
+2025-11-28 09:16:33 - DEBUG - Email déplacé: Test factures
+2025-11-28 09:16:33 - INFO - Email traité avec succès: Test factures
+2025-11-28 09:16:33 - INFO - Traitement: Factures : avril 2025
+2025-11-28 09:16:34 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_f0qjky5n\email_20251128091633710127\Facture d’entreprise de base1.pdf
+2025-11-28 09:16:34 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:16:34 - DEBUG - PDF ajouté: Facture d’entreprise de base1.pdf
+2025-11-28 09:16:34 - DEBUG - Catégorie 'Succès' appliquée à: Factures : avril 2025
+2025-11-28 09:16:35 - DEBUG - Email déplacé: Factures : avril 2025
+2025-11-28 09:16:35 - INFO - Email traité avec succès: Factures : avril 2025
+2025-11-28 09:16:35 - INFO - Traitement terminé: 5/5 succès, 0 échec(s)
+2025-11-28 09:19:36 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:19:36 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:19:36 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 09:19:47 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:19:47 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:19:47 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 09:36:54 - INFO - Application started.
+2025-11-28 09:36:59 - INFO - Connexion à Outlook établie
+2025-11-28 09:36:59 - INFO - Mots clés: facture
+2025-11-28 09:37:00 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 09:37:00 - DEBUG - Email correspondant trouvé: TR: Facture octobre
+2025-11-28 09:37:00 - INFO - 1 email(s) correspondant(s) trouvé(s)
+2025-11-28 09:37:00 - INFO - 1 email(s) à traiter
+2025-11-28 09:37:00 - INFO - Traitement: TR: Facture octobre
+2025-11-28 09:37:00 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_vjb05_m0\email_20251128093700579411\image001.png
+2025-11-28 09:37:00 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:37:00 - DEBUG - Image convertie: image001.png
+2025-11-28 09:37:01 - DEBUG - Catégorie 'Succès' appliquée à: TR: Facture octobre
+2025-11-28 09:37:02 - DEBUG - Email déplacé: TR: Facture octobre
+2025-11-28 09:37:02 - INFO - Email traité avec succès: TR: Facture octobre
+2025-11-28 09:37:02 - INFO - Traitement terminé: 1/1 succès, 0 échec(s)
+2025-11-28 09:51:59 - INFO - Application started.
+2025-11-28 09:53:14 - WARNING - reportlab non installé - génération PDF limitée
+2025-11-28 09:53:14 - WARNING - PyPDF2 non installé - fusion PDF limitée
+2025-11-28 09:53:14 - INFO - Connexion à Outlook établie
+2025-11-28 09:53:14 - INFO - Mots clés: facture
+2025-11-28 09:53:14 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 09:53:15 - INFO - 0 email(s) correspondant(s) trouvé(s)
+2025-11-28 09:53:15 - INFO - Aucun email correspondant trouvé

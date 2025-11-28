@@ -1,2 +1,62 @@
 2025-11-27 19:25:14 - INFO - Application started.
 2025-11-27 19:26:08 - INFO - Application started.
+2025-11-28 09:20:25 - INFO - Application started.
+2025-11-28 09:20:31 - WARNING - reportlab non installé - génération PDF limitée
+2025-11-28 09:20:31 - WARNING - PyPDF2 non installé - fusion PDF limitée
+2025-11-28 09:20:31 - INFO - Connexion à Outlook établie
+2025-11-28 09:20:31 - INFO - Mots clés: facture
+2025-11-28 09:20:32 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 09:20:32 - DEBUG - Email correspondant trouvé: TR: Facture octobre
+2025-11-28 09:20:32 - INFO - 1 email(s) correspondant(s) trouvé(s)
+2025-11-28 09:20:32 - INFO - 1 email(s) à traiter
+2025-11-28 09:20:32 - INFO - Traitement: TR: Facture octobre
+2025-11-28 09:20:32 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_4kjdam9_\email_20251128092032563085\image001.png
+2025-11-28 09:20:32 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:20:32 - ERROR - Erreur génération PDF: reportlab est requis pour générer des PDF
+2025-11-28 09:20:33 - DEBUG - Catégorie 'Erreur traitement' appliquée à: TR: Facture octobre
+2025-11-28 09:20:33 - INFO - Traitement terminé: 0/1 succès, 1 échec(s)
+2025-11-28 09:25:47 - INFO - Application started.
+2025-11-28 09:32:25 - WARNING - reportlab non installé - génération PDF limitée
+2025-11-28 09:32:25 - WARNING - PyPDF2 non installé - fusion PDF limitée
+2025-11-28 09:32:25 - INFO - Connexion à Outlook établie
+2025-11-28 09:32:25 - INFO - Mots clés: facture
+2025-11-28 09:32:25 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 09:32:25 - DEBUG - Email correspondant trouvé: TR: Facture octobre
+2025-11-28 09:32:25 - INFO - 1 email(s) correspondant(s) trouvé(s)
+2025-11-28 09:32:25 - INFO - 1 email(s) à traiter
+2025-11-28 09:32:25 - INFO - Traitement: TR: Facture octobre
+2025-11-28 09:32:25 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_bxkfcsan\email_20251128093225935546\image001.png
+2025-11-28 09:32:25 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:32:25 - ERROR - Erreur génération PDF: reportlab est requis pour générer des PDF
+2025-11-28 09:32:26 - DEBUG - Catégorie 'Erreur traitement' appliquée à: TR: Facture octobre
+2025-11-28 09:32:26 - INFO - Traitement terminé: 0/1 succès, 1 échec(s)
+2025-11-28 09:34:46 - INFO - Application started.
+2025-11-28 09:35:05 - WARNING - reportlab non installé - génération PDF limitée
+2025-11-28 09:35:05 - WARNING - PyPDF2 non installé - fusion PDF limitée
+2025-11-28 09:35:05 - INFO - Connexion à Outlook établie
+2025-11-28 09:35:05 - INFO - Mots clés: facture
+2025-11-28 09:35:05 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 09:35:06 - DEBUG - Email correspondant trouvé: TR: Facture octobre
+2025-11-28 09:35:06 - INFO - 1 email(s) correspondant(s) trouvé(s)
+2025-11-28 09:35:06 - INFO - 1 email(s) à traiter
+2025-11-28 09:35:06 - INFO - Traitement: TR: Facture octobre
+2025-11-28 09:35:06 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs__o_bfai2\email_20251128093506402728\image001.png
+2025-11-28 09:35:06 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 09:35:06 - ERROR - Erreur génération PDF: reportlab est requis pour générer des PDF
+2025-11-28 09:35:06 - DEBUG - Catégorie 'Erreur traitement' appliquée à: TR: Facture octobre
+2025-11-28 09:35:06 - INFO - Traitement terminé: 0/1 succès, 1 échec(s)
+2025-11-28 09:35:20 - WARNING - reportlab non installé - génération PDF limitée
+2025-11-28 09:35:20 - WARNING - PyPDF2 non installé - fusion PDF limitée
+2025-11-28 09:35:20 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:35:20 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:35:20 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 09:35:30 - WARNING - reportlab non installé - génération PDF limitée
+2025-11-28 09:35:30 - WARNING - PyPDF2 non installé - fusion PDF limitée
+2025-11-28 09:35:30 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:35:30 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:35:30 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2025-11-28 09:35:44 - WARNING - reportlab non installé - génération PDF limitée
+2025-11-28 09:35:44 - WARNING - PyPDF2 non installé - fusion PDF limitée
+2025-11-28 09:35:44 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:35:44 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2025-11-28 09:35:44 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
