@@ -3,6 +3,7 @@ pywin32>=306              # Interface COM pour Microsoft Outlook
 reportlab>=4.0.0          # Génération de PDF
 PyPDF2>=3.0.0             # Manipulation et fusion de PDF
 Pillow>=10.0.0            # Traitement d'images (conversion en PDF)
+tkcalendar>=1.6.1         # Sélecteur de date avec calendrier
 
 # Dépendances optionnelles
 python-dotenv>=1.0.0      # Gestion des variables d'environnement

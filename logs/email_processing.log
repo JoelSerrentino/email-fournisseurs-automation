@@ -304,3 +304,57 @@
 2025-11-28 09:53:14 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
 2025-11-28 09:53:15 - INFO - 0 email(s) correspondant(s) trouvé(s)
 2025-11-28 09:53:15 - INFO - Aucun email correspondant trouvé
+2025-11-28 10:11:20 - INFO - Application started.
+2025-11-28 10:13:40 - INFO - Application started.
+2025-11-28 10:19:35 - INFO - Application started.
+2025-11-28 10:26:37 - INFO - Application started.
+2025-11-28 10:32:41 - INFO - Connexion à Outlook établie
+2025-11-28 10:32:41 - INFO - Mots clés: facture
+2025-11-28 10:32:41 - INFO - Dossier cible: \\Test informatique Lancy\Boîte de réception\Fournisseurs
+2025-11-28 10:32:41 - INFO - Filtrage depuis: 24/11/2025
+2025-11-28 10:32:41 - INFO - Filtrage jusqu'à: 28/11/2025
+2025-11-28 10:32:42 - DEBUG - Email correspondant trouvé: TR: Facture octobre
+2025-11-28 10:32:42 - DEBUG - Email correspondant trouvé: Facture octobre
+2025-11-28 10:32:42 - DEBUG - Email correspondant trouvé: Facture avec TVA1.xlsx
+2025-11-28 10:32:42 - DEBUG - Email correspondant trouvé: Facture du mois de novembre
+2025-11-28 10:32:42 - DEBUG - Email correspondant trouvé: Test factures
+2025-11-28 10:32:42 - INFO - 5 email(s) correspondant(s) trouvé(s)
+2025-11-28 10:32:42 - INFO - 5 email(s) à traiter
+2025-11-28 10:32:42 - INFO - Traitement: TR: Facture octobre
+2025-11-28 10:32:42 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_vpbmmyqc\email_20251128103242499586\image001.png
+2025-11-28 10:32:42 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 10:32:42 - DEBUG - Image convertie: image001.png
+2025-11-28 10:32:43 - DEBUG - Catégorie 'Succès' appliquée à: TR: Facture octobre
+2025-11-28 10:32:44 - DEBUG - Email déplacé: TR: Facture octobre
+2025-11-28 10:32:44 - INFO - Email traité avec succès: TR: Facture octobre
+2025-11-28 10:32:44 - INFO - Traitement: Facture octobre
+2025-11-28 10:32:45 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_vpbmmyqc\email_20251128103244870920\image001.png
+2025-11-28 10:32:45 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 10:32:45 - DEBUG - Image convertie: image001.png
+2025-11-28 10:32:48 - DEBUG - Catégorie 'Succès' appliquée à: Facture octobre
+2025-11-28 10:32:50 - DEBUG - Email déplacé: Facture octobre
+2025-11-28 10:32:50 - INFO - Email traité avec succès: Facture octobre
+2025-11-28 10:32:50 - INFO - Traitement: Facture avec TVA1.xlsx
+2025-11-28 10:32:50 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_vpbmmyqc\email_20251128103250610581\Facture avec TVA1.xlsx
+2025-11-28 10:32:50 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 10:32:56 - DEBUG - Excel converti en PDF: Facture avec TVA1.xlsx
+2025-11-28 10:32:59 - DEBUG - Document Excel converti: Facture avec TVA1.xlsx
+2025-11-28 10:33:00 - DEBUG - Catégorie 'Succès' appliquée à: Facture avec TVA1.xlsx
+2025-11-28 10:33:01 - DEBUG - Email déplacé: Facture avec TVA1.xlsx
+2025-11-28 10:33:01 - INFO - Email traité avec succès: Facture avec TVA1.xlsx
+2025-11-28 10:33:01 - INFO - Traitement: Facture du mois de novembre
+2025-11-28 10:33:02 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_vpbmmyqc\email_20251128103301980003\Document1.docx
+2025-11-28 10:33:02 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 10:33:05 - DEBUG - Word converti en PDF: Document1.docx
+2025-11-28 10:33:08 - DEBUG - Document Word converti: Document1.docx
+2025-11-28 10:33:08 - DEBUG - Catégorie 'Succès' appliquée à: Facture du mois de novembre
+2025-11-28 10:33:09 - DEBUG - Email déplacé: Facture du mois de novembre
+2025-11-28 10:33:09 - INFO - Email traité avec succès: Facture du mois de novembre
+2025-11-28 10:33:10 - INFO - Traitement: Test factures
+2025-11-28 10:33:10 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_vpbmmyqc\email_20251128103310391272\Test factures.pdf
+2025-11-28 10:33:10 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2025-11-28 10:33:10 - DEBUG - PDF ajouté: Test factures.pdf
+2025-11-28 10:33:10 - DEBUG - Catégorie 'Succès' appliquée à: Test factures
+2025-11-28 10:33:12 - DEBUG - Email déplacé: Test factures
+2025-11-28 10:33:12 - INFO - Email traité avec succès: Test factures
+2025-11-28 10:33:12 - INFO - Traitement terminé: 5/5 succès, 0 échec(s)

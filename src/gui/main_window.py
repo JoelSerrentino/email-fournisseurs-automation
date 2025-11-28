@@ -5,6 +5,7 @@ import sys
 import json
 import threading
 from datetime import datetime
+from tkcalendar import DateEntry
 
 # Ajouter le répertoire src au path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -67,6 +68,10 @@ class MainWindow:
         self.output_folder_var = tk.StringVar()
         self.outlook_folder_var = tk.StringVar()
         self.category_var = tk.StringVar(value="Traité")
+        
+        # Variables de date
+        self.date_from_var = tk.StringVar()
+        self.date_to_var = tk.StringVar()
         
         # Variables de progression
         self.progress_var = tk.DoubleVar(value=0)
@@ -406,6 +411,117 @@ class MainWindow:
         self.keywords_entry = self.create_form_row(
             content, "Mots clés (séparés par ,) :", self.keywords_var, 0
         )
+        
+        # Ligne des dates Du et Au sur la même ligne
+        self.date_from_entry, self.date_to_entry = self.create_date_range_row(
+            content, self.date_from_var, self.date_to_var, 1
+        )
+        
+        # Note d'aide
+        help_label = tk.Label(content, 
+                text="📅 Cliquez sur ▼ pour ouvrir le calendrier • Laissez vide pour ne pas filtrer par date",
+                font=('Segoe UI', 8, 'italic'),
+                bg=self.COLORS['bg_medium'],
+                fg=self.COLORS['text_secondary'])
+        help_label.grid(row=2, column=0, columnspan=2, sticky='w', pady=(5, 0))
+    
+    def create_date_range_row(self, parent, var_from, var_to, row):
+        """Crée une ligne avec deux DateEntry (Du et Au) sur la même ligne"""
+        # Label "Période :"
+        label = tk.Label(parent, text="Période :", anchor=tk.W,
+                        font=('Segoe UI', 10), bg=self.COLORS['bg_medium'],
+                        fg=self.COLORS['text'])
+        label.grid(row=row, column=0, sticky='w', pady=5, padx=(0, 10))
+        
+        # Container pour les deux dates
+        dates_container = tk.Frame(parent, bg=self.COLORS['bg_medium'])
+        dates_container.grid(row=row, column=1, sticky='ew', pady=5)
+        dates_container.grid_columnconfigure(1, weight=1)
+        dates_container.grid_columnconfigure(4, weight=1)
+        
+        # --- Date Du ---
+        tk.Label(dates_container, text="Du :",
+                font=('Segoe UI', 10), bg=self.COLORS['bg_medium'],
+                fg=self.COLORS['text']).grid(row=0, column=0, sticky='w', padx=(0, 5))
+        
+        # Bordure Du
+        border_from = tk.Frame(dates_container, bg=self.COLORS['entry_border'])
+        border_from.grid(row=0, column=1, sticky='ew', padx=(0, 10))
+        
+        date_from = DateEntry(border_from,
+                             textvariable=var_from,
+                             font=('Segoe UI', 10),
+                             background=self.COLORS['accent'],
+                             foreground='white',
+                             selectbackground=self.COLORS['accent'],
+                             selectforeground='white',
+                             normalbackground=self.COLORS['entry_bg'],
+                             normalforeground=self.COLORS['text'],
+                             borderwidth=0,
+                             date_pattern='dd/mm/yyyy',
+                             locale='fr_FR')
+        date_from.grid(row=0, column=0, sticky='ew', ipady=6, ipadx=8, padx=1, pady=1)
+        date_from.delete(0, 'end')
+        
+        # Bouton effacer Du
+        btn_clear_from = tk.Button(dates_container, text="✕",
+                                  command=lambda: var_from.set(""),
+                                  font=('Segoe UI', 9),
+                                  bg=self.COLORS['bg_light'],
+                                  fg=self.COLORS['text_secondary'],
+                                  relief=tk.FLAT, width=2, cursor='hand2')
+        btn_clear_from.grid(row=0, column=2, padx=(0, 20))
+        
+        # --- Date Au ---
+        tk.Label(dates_container, text="Au :",
+                font=('Segoe UI', 10), bg=self.COLORS['bg_medium'],
+                fg=self.COLORS['text']).grid(row=0, column=3, sticky='w', padx=(0, 5))
+        
+        # Bordure Au
+        border_to = tk.Frame(dates_container, bg=self.COLORS['entry_border'])
+        border_to.grid(row=0, column=4, sticky='ew', padx=(0, 10))
+        
+        date_to = DateEntry(border_to,
+                           textvariable=var_to,
+                           font=('Segoe UI', 10),
+                           background=self.COLORS['accent'],
+                           foreground='white',
+                           selectbackground=self.COLORS['accent'],
+                           selectforeground='white',
+                           normalbackground=self.COLORS['entry_bg'],
+                           normalforeground=self.COLORS['text'],
+                           borderwidth=0,
+                           date_pattern='dd/mm/yyyy',
+                           locale='fr_FR')
+        date_to.grid(row=0, column=0, sticky='ew', ipady=6, ipadx=8, padx=1, pady=1)
+        date_to.delete(0, 'end')
+        
+        # Bouton effacer Au
+        btn_clear_to = tk.Button(dates_container, text="✕",
+                                command=lambda: var_to.set(""),
+                                font=('Segoe UI', 9),
+                                bg=self.COLORS['bg_light'],
+                                fg=self.COLORS['text_secondary'],
+                                relief=tk.FLAT, width=2, cursor='hand2')
+        btn_clear_to.grid(row=0, column=5)
+        
+        # Effets focus
+        def make_focus_handlers(border):
+            def on_focus_in(e):
+                border.configure(bg=self.COLORS['accent'])
+            def on_focus_out(e):
+                border.configure(bg=self.COLORS['entry_border'])
+            return on_focus_in, on_focus_out
+        
+        fi_from, fo_from = make_focus_handlers(border_from)
+        date_from.bind('<FocusIn>', fi_from)
+        date_from.bind('<FocusOut>', fo_from)
+        
+        fi_to, fo_to = make_focus_handlers(border_to)
+        date_to.bind('<FocusIn>', fi_to)
+        date_to.bind('<FocusOut>', fo_to)
+        
+        return date_from, date_to
 
     def create_output_section(self, parent):
         """Section de sortie PDF"""
@@ -778,7 +894,9 @@ class MainWindow:
             "keywords": self.keywords_var.get(),
             "output_folder": self.output_folder_var.get(),
             "outlook_folder": self.outlook_folder_var.get(),
-            "category": self.category_var.get()
+            "category": self.category_var.get(),
+            "date_from": self.date_from_var.get(),
+            "date_to": self.date_to_var.get()
         }
         
         config_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "config")
@@ -804,6 +922,8 @@ class MainWindow:
                     self.output_folder_var.set(settings.get("output_folder", ""))
                     self.outlook_folder_var.set(settings.get("outlook_folder", ""))
                     self.category_var.set(settings.get("category", "Traité"))
+                    self.date_from_var.set(settings.get("date_from", ""))
+                    self.date_to_var.set(settings.get("date_to", ""))
                 self.log("Paramètres chargés", "info")
             except Exception as e:
                 self.log(f"Erreur chargement paramètres: {e}", "error")
@@ -865,13 +985,17 @@ class MainWindow:
             mailbox_name = self.mailbox_var.get()
             target_folder_path = self.outlook_folder_var.get() if self.outlook_folder_var.get() else ""
             category = self.category_var.get() if self.category_var.get() else ""
+            date_from = self.date_from_var.get() if self.date_from_var.get() else None
+            date_to = self.date_to_var.get() if self.date_to_var.get() else None
             
             # Lancer le traitement
             stats = self.email_processor.process_emails(
                 mailbox_name=mailbox_name,
                 keywords_str=keywords_str,
                 target_folder_path=target_folder_path,
-                category=category
+                category=category,
+                date_from=date_from,
+                date_to=date_to
             )
             
             # Traitement terminé

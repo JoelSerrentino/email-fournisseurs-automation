@@ -18,6 +18,7 @@ Application d'automatisation pour le traitement des emails fournisseurs, conçue
 ## Fonctionnalités
 - 📬 **Sélection de la boîte aux lettres** Outlook via interface graphique
 - 🔍 **Filtrage des emails** par mots clés dans l'objet
+- 📅 **Filtrage par date** avec sélecteur de calendrier (période Du/Au)
 - 📁 **Déplacement automatique** des emails vers un dossier Outlook choisi
 - 📄 **Fusion en PDF** : emails et pièces jointes combinés en un seul fichier
 - 🏷️ **Catégorisation automatique** avec couleurs (vert = succès, rouge = erreur)
@@ -110,6 +111,7 @@ email-fournisseurs-automation/
    - Choisir le dossier de destination Outlook
    - Définir la catégorie à appliquer après traitement
    - Saisir les mots clés de filtrage (séparés par des virgules)
+   - Sélectionner une période de dates (optionnel) : cliquez sur ▼ pour ouvrir le calendrier
    - Sélectionner le dossier de sortie pour les PDF
 
 3. **Sauvegarder les paramètres** (optionnel) pour les réutiliser ultérieurement
@@ -127,6 +129,7 @@ email-fournisseurs-automation/
 | `reportlab` | ≥4.0.0 | Génération de PDF depuis le contenu des emails |
 | `PyPDF2` | ≥3.0.0 | Manipulation et fusion de fichiers PDF |
 | `Pillow` | ≥10.0.0 | Conversion d'images en PDF |
+| `tkcalendar` | ≥1.6.1 | Sélecteur de date avec calendrier intégré |
 
 ## 📦 Créer l'exécutable
 

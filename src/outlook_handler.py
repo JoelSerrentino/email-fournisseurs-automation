@@ -425,15 +425,18 @@ class OutlookHandler:
     
     def filter_emails(self, mailbox_name: str, keywords: List[str], 
                       unread_only: bool = False,
-                      folder_name: str = None) -> List[EmailItem]:
+                      folder_name: str = None,
+                      date_from: str = None, date_to: str = None) -> List[EmailItem]:
         """
-        Filtre les emails par mots clés dans l'objet.
+        Filtre les emails par mots clés dans l'objet et/ou par date.
         
         Args:
             mailbox_name: Nom de la boîte aux lettres
             keywords: Liste de mots clés à rechercher
             unread_only: Filtrer uniquement les non lus
             folder_name: Nom du dossier spécifique (sinon Inbox)
+            date_from: Date de début (format JJ/MM/AAAA)
+            date_to: Date de fin (format JJ/MM/AAAA)
         
         Returns:
             Liste d'objets EmailItem correspondants
@@ -442,6 +445,26 @@ class OutlookHandler:
             self.connect()
         
         filtered_emails = []
+        
+        # Parser les dates si fournies
+        parsed_date_from = None
+        parsed_date_to = None
+        
+        if date_from:
+            try:
+                parsed_date_from = datetime.strptime(date_from.strip(), "%d/%m/%Y")
+                logger.info(f"Filtrage depuis: {parsed_date_from.strftime('%d/%m/%Y')}")
+            except ValueError:
+                logger.warning(f"Format de date invalide pour 'Du': {date_from}")
+        
+        if date_to:
+            try:
+                # Ajouter 23:59:59 pour inclure toute la journée
+                parsed_date_to = datetime.strptime(date_to.strip(), "%d/%m/%Y")
+                parsed_date_to = parsed_date_to.replace(hour=23, minute=59, second=59)
+                logger.info(f"Filtrage jusqu'à: {parsed_date_to.strftime('%d/%m/%Y')}")
+            except ValueError:
+                logger.warning(f"Format de date invalide pour 'Au': {date_to}")
         
         try:
             if folder_name:
@@ -461,6 +484,20 @@ class OutlookHandler:
                     # Filtre non lu si demandé
                     if unread_only and not item.UnRead:
                         continue
+                    
+                    # Filtrer par date de réception
+                    if parsed_date_from or parsed_date_to:
+                        received_time = item.ReceivedTime
+                        # Convertir en datetime Python (sans timezone)
+                        email_date = datetime(
+                            received_time.year, received_time.month, received_time.day,
+                            received_time.hour, received_time.minute, received_time.second
+                        )
+                        
+                        if parsed_date_from and email_date < parsed_date_from:
+                            continue
+                        if parsed_date_to and email_date > parsed_date_to:
+                            continue
                     
                     # Vérifier les mots clés dans l'objet
                     subject = item.Subject or ""

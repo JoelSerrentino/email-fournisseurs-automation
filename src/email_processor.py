@@ -178,7 +178,8 @@ class EmailProcessor:
             return False
     
     def get_matching_emails(self, mailbox_name: str, keywords: List[str],
-                           unread_only: bool = False) -> List[EmailItem]:
+                           unread_only: bool = False,
+                           date_from: str = None, date_to: str = None) -> List[EmailItem]:
         """
         Récupère les emails correspondant aux critères.
         
@@ -186,12 +187,15 @@ class EmailProcessor:
             mailbox_name: Nom de la boîte aux lettres
             keywords: Liste des mots clés à rechercher
             unread_only: Filtrer uniquement les non lus
+            date_from: Date de début (format JJ/MM/AAAA)
+            date_to: Date de fin (format JJ/MM/AAAA)
         
         Returns:
             Liste des emails correspondants
         """
         return self.outlook_handler.filter_emails(
-            mailbox_name, keywords, unread_only=unread_only
+            mailbox_name, keywords, unread_only=unread_only,
+            date_from=date_from, date_to=date_to
         )
     
     def preview_emails(self, mailbox_name: str, keywords_str: str,
@@ -220,7 +224,8 @@ class EmailProcessor:
     
     def process_emails(self, mailbox_name: str, keywords_str: str,
                        target_folder_path: str, category: str,
-                       unread_only: bool = False) -> ProcessingStats:
+                       unread_only: bool = False,
+                       date_from: str = None, date_to: str = None) -> ProcessingStats:
         """
         Traite tous les emails correspondant aux critères.
         
@@ -230,6 +235,8 @@ class EmailProcessor:
             target_folder_path: Chemin du dossier Outlook destination
             category: Catégorie à appliquer après traitement (succès)
             unread_only: Filtrer uniquement les non lus
+            date_from: Date de début (format JJ/MM/AAAA)
+            date_to: Date de fin (format JJ/MM/AAAA)
         
         Returns:
             Statistiques de traitement
@@ -278,7 +285,7 @@ class EmailProcessor:
             
             # Rechercher les emails
             self._report_status("Recherche des emails...")
-            emails = self.get_matching_emails(mailbox_name, keywords, unread_only)
+            emails = self.get_matching_emails(mailbox_name, keywords, unread_only, date_from, date_to)
             
             self.stats.total = len(emails)
             
