@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# PyInstaller
+*.spec
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Logs
+logs/*.log
+src/logs/*.log
+
+# Configuration locale (garder gui_settings.json comme exemple)
+# config/gui_settings.json
+
+# Installer output
+installer_output/
+
+# Temporary files
+*.tmp
+*.temp

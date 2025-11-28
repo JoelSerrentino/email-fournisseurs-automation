@@ -3,17 +3,38 @@
 ## Description
 Application d'automatisation pour le traitement des emails fournisseurs, conçue pour le **Service des Finances**. Elle permet de filtrer les emails en fonction de mots clés, de les déplacer vers un dossier Outlook, de fusionner le contenu et les pièces jointes en fichiers PDF, et d'appliquer une catégorie Outlook après traitement.
 
+## 🚀 Installation rapide (Exécutable)
+
+**Aucune installation Python requise !**
+
+1. Téléchargez `Email-Fournisseurs-Automation.exe` depuis le dossier `dist/`
+2. Double-cliquez pour lancer l'application
+
+### Prérequis sur le poste cible
+- ✅ Windows 10/11
+- ✅ Microsoft Outlook installé et configuré
+- ⚪ Microsoft Word/Excel (optionnel, pour conversion des pièces jointes Office)
+
 ## Fonctionnalités
 - 📬 **Sélection de la boîte aux lettres** Outlook via interface graphique
 - 🔍 **Filtrage des emails** par mots clés dans l'objet
 - 📁 **Déplacement automatique** des emails vers un dossier Outlook choisi
 - 📄 **Fusion en PDF** : emails et pièces jointes combinés en un seul fichier
-- 🏷️ **Catégorisation automatique** des emails traités dans Outlook
+- 🏷️ **Catégorisation automatique** avec couleurs (vert = succès, rouge = erreur)
 - 💾 **Sauvegarde des paramètres** pour une réutilisation rapide
-- 📋 **Journal d'activité** en temps réel
+- 📋 **Journal d'activité** en temps réel avec causes d'erreurs détaillées
 - 📊 **Barre de progression** avec statistiques (succès/échecs)
 - ⏹️ **Arrêt du traitement** à tout moment
 - 🔄 **Traitement asynchrone** (interface non bloquée)
+
+### Types de pièces jointes supportés
+| Type | Extensions | Méthode de conversion |
+|------|------------|----------------------|
+| PDF | `.pdf` | Fusion directe |
+| Images | `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.tiff`, `.webp` | Pillow |
+| Word | `.doc`, `.docx` | Microsoft Word (COM) |
+| Excel | `.xls`, `.xlsx` | Microsoft Excel (COM) |
+| Texte | `.txt`, `.csv`, `.log` | ReportLab |
 
 ## Interface graphique
 L'application dispose d'une interface moderne **style Windows 11**, adaptée pour un environnement professionnel :
@@ -45,16 +66,20 @@ email-fournisseurs-automation/
 │   ├── __init__.py
 │   ├── test_email_processor.py
 │   └── test_pdf_generator.py
+├── dist/                      # Exécutable généré
+│   └── Email-Fournisseurs-Automation.exe
+├── build_installer.ps1        # Script de build PowerShell
+├── Email-Fournisseurs-Automation.spec  # Configuration PyInstaller
 ├── requirements.txt           # Dépendances Python
 └── README.md
 ```
 
-## Prérequis
+## Prérequis (pour le développement)
 - Python 3.10 ou supérieur
 - Microsoft Outlook installé et configuré
 - Windows 10/11
 
-## Installation
+## Installation (pour le développement)
 
 1. **Cloner le dépôt**
    ```bash
@@ -98,10 +123,25 @@ email-fournisseurs-automation/
 ## Dépendances principales
 | Package | Version | Description |
 |---------|---------|-------------|
-| `pywin32` | ≥306 | Interaction avec Microsoft Outlook via COM |
+| `pywin32` | ≥306 | Interaction avec Microsoft Outlook, Word, Excel via COM |
 | `reportlab` | ≥4.0.0 | Génération de PDF depuis le contenu des emails |
 | `PyPDF2` | ≥3.0.0 | Manipulation et fusion de fichiers PDF |
 | `Pillow` | ≥10.0.0 | Conversion d'images en PDF |
+
+## 📦 Créer l'exécutable
+
+### Méthode rapide (PowerShell)
+```powershell
+.\build_installer.ps1
+```
+
+### Méthode manuelle
+```bash
+pip install pyinstaller
+pyinstaller --onefile --windowed --name "Email-Fournisseurs-Automation" --add-data "config;config" src/main.py
+```
+
+L'exécutable sera créé dans le dossier `dist/`.
 
 ## Architecture technique
 
@@ -114,6 +154,21 @@ email-fournisseurs-automation/
 
 ### Traitement asynchrone
 Le traitement des emails s'exécute dans un thread séparé pour ne pas bloquer l'interface graphique. Les mises à jour de progression sont transmises via callbacks thread-safe.
+
+### Catégories Outlook
+L'application crée automatiquement les catégories avec les couleurs appropriées :
+- **Succès** : Catégorie verte (configurable dans l'interface)
+- **Erreur** : Catégorie rouge "Erreur traitement"
+
+## 🐛 Dépannage
+
+| Problème | Solution |
+|----------|----------|
+| "pywin32 n'est pas installé" | `pip install pywin32` |
+| "Connexion Outlook échouée" | Vérifier qu'Outlook est ouvert et configuré |
+| "Dossier introuvable" | Vérifier le chemin du dossier Outlook |
+| Conversion Word/Excel échoue | Vérifier que Microsoft Office est installé |
+| L'exécutable ne démarre pas | Exécuter en tant qu'administrateur |
 
 ## Licence
 Ce projet est sous licence MIT.
