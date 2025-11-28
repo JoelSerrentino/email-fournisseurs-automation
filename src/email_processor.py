@@ -83,20 +83,25 @@ class EmailProcessor:
     5. Application de la catégorie Outlook
     """
     
-    def __init__(self, output_folder: str):
+    def __init__(self, output_folder: str, 
+                 progress_callback: Optional[Callable[[int, int, str], None]] = None,
+                 log_callback: Optional[Callable[[str, str], None]] = None):
         """
         Initialise le processeur d'emails.
         
         Args:
             output_folder: Dossier de sortie pour les PDF
+            progress_callback: Callback de progression (current, total, message)
+            log_callback: Callback de log (message, level)
         """
         self.output_folder = output_folder
         self.outlook_handler = OutlookHandler()
         self.pdf_generator = PDFGenerator(output_folder)
         
         # Callbacks pour l'interface
-        self._progress_callback: Optional[Callable[[int, int, str], None]] = None
+        self._progress_callback: Optional[Callable[[int, int, str], None]] = progress_callback
         self._status_callback: Optional[Callable[[str], None]] = None
+        self._log_callback: Optional[Callable[[str, str], None]] = log_callback
         
         # Statistiques
         self.stats = ProcessingStats()
@@ -137,10 +142,21 @@ class EmailProcessor:
         if self._status_callback:
             self._status_callback(status)
     
+    def _report_log(self, message: str, level: str = "info"):
+        """Rapporte un message de log"""
+        if self._log_callback:
+            self._log_callback(message, level)
+    
     def stop(self):
         """Demande l'arrêt du traitement"""
         self._should_stop = True
         logger.warning("Arrêt du traitement demandé...")
+        if self._log_callback:
+            self._log_callback("Arrêt du traitement demandé...", "warning")
+    
+    def _check_stop(self) -> bool:
+        """Vérifie si l'arrêt a été demandé"""
+        return self._should_stop
     
     @property
     def is_running(self) -> bool:
@@ -212,7 +228,7 @@ class EmailProcessor:
             mailbox_name: Nom de la boîte aux lettres
             keywords_str: Mots clés séparés par des virgules
             target_folder_path: Chemin du dossier Outlook destination
-            category: Catégorie à appliquer après traitement
+            category: Catégorie à appliquer après traitement (succès)
             unread_only: Filtrer uniquement les non lus
         
         Returns:
@@ -224,6 +240,9 @@ class EmailProcessor:
         self.stats = ProcessingStats()
         self.results = []
         
+        # Catégorie pour les erreurs
+        error_category = "Erreur traitement"
+        
         # Créer le dossier temporaire
         self._temp_dir = tempfile.mkdtemp(prefix='email_fournisseurs_')
         
@@ -234,6 +253,11 @@ class EmailProcessor:
             if not self.outlook_handler.is_connected:
                 if not self.connect_outlook():
                     raise OutlookError("Impossible de se connecter à Outlook")
+            
+            # Créer les catégories avec les bonnes couleurs
+            if category:
+                self.outlook_handler.ensure_category_exists(category, 'green')
+            self.outlook_handler.ensure_category_exists(error_category, 'red')
             
             # Valider les mots clés
             keywords = validate_keywords(keywords_str)
@@ -274,7 +298,7 @@ class EmailProcessor:
                 self._report_progress(i + 1, self.stats.total, 
                                      f"Traitement: {email.subject[:40]}...")
                 
-                result = self._process_single_email(email, target_folder, category)
+                result = self._process_single_email(email, target_folder, category, error_category)
                 self.results.append(result)
                 
                 # Mettre à jour les statistiques
@@ -309,14 +333,15 @@ class EmailProcessor:
         return self.stats
     
     def _process_single_email(self, email: EmailItem, target_folder,
-                               category: str) -> ProcessingResult:
+                               category: str, error_category: str = "Erreur traitement") -> ProcessingResult:
         """
         Traite un seul email.
         
         Args:
             email: EmailItem à traiter
             target_folder: Dossier Outlook destination (ou None)
-            category: Catégorie à appliquer
+            category: Catégorie à appliquer en cas de succès (vert)
+            error_category: Catégorie à appliquer en cas d'erreur (rouge)
         
         Returns:
             Résultat du traitement
@@ -327,6 +352,12 @@ class EmailProcessor:
             status=ProcessingStatus.PENDING
         )
         
+        # Vérifier si l'arrêt est demandé avant de commencer
+        if self._check_stop():
+            result.status = ProcessingStatus.SKIPPED
+            result.error_message = "Traitement interrompu par l'utilisateur"
+            return result
+        
         try:
             logger.info(f"Traitement: {email.subject[:50]}")
             result.status = ProcessingStatus.IN_PROGRESS
@@ -334,12 +365,19 @@ class EmailProcessor:
             # 1. Sauvegarder les pièces jointes
             attachment_paths = []
             if email.has_attachments:
+                if self._check_stop():
+                    result.status = ProcessingStatus.SKIPPED
+                    return result
                 email_temp_dir = os.path.join(self._temp_dir, 
                                               f"email_{datetime.now().strftime('%Y%m%d%H%M%S%f')}")
                 attachment_paths = email.save_attachments(email_temp_dir)
                 logger.debug(f"{len(attachment_paths)} pièce(s) jointe(s) sauvegardée(s)")
             
-            # 2. Générer le PDF
+            # 2. Générer le PDF (vérifier l'arrêt avant)
+            if self._check_stop():
+                result.status = ProcessingStatus.SKIPPED
+                return result
+                
             pdf_path = self.pdf_generator.generate_email_pdf(
                 sender=email.sender,
                 sender_name=email.sender_name,
@@ -350,16 +388,20 @@ class EmailProcessor:
             )
             result.pdf_path = pdf_path
             
-            # 3. Déplacer l'email si un dossier cible est défini
-            if target_folder:
-                email.move_to(target_folder)
-            
-            # 4. Appliquer la catégorie
+            # 3. Appliquer la catégorie SUCCÈS (vert) AVANT de déplacer
             if category:
                 email.set_category(category)
             
-            # 5. Marquer comme lu
+            # 4. Marquer comme lu AVANT de déplacer
             email.mark_as_read()
+            
+            # 5. Déplacer l'email si un dossier cible est défini (en dernier!)
+            if self._check_stop():
+                result.status = ProcessingStatus.SKIPPED
+                return result
+                
+            if target_folder:
+                email.move_to(target_folder)
             
             result.status = ProcessingStatus.SUCCESS
             logger.success(f"Email traité avec succès: {email.subject[:40]}")
@@ -368,16 +410,31 @@ class EmailProcessor:
             result.status = ProcessingStatus.FAILED
             result.error_message = f"Erreur génération PDF: {e}"
             logger.error(result.error_message)
+            # Appliquer la catégorie d'erreur (rouge)
+            try:
+                email.set_category(error_category)
+            except:
+                pass
             
         except OutlookError as e:
             result.status = ProcessingStatus.FAILED
             result.error_message = f"Erreur Outlook: {e}"
             logger.error(result.error_message)
+            # Appliquer la catégorie d'erreur (rouge)
+            try:
+                email.set_category(error_category)
+            except:
+                pass
             
         except Exception as e:
             result.status = ProcessingStatus.FAILED
             result.error_message = f"Erreur inattendue: {e}"
             logger.error(result.error_message)
+            # Appliquer la catégorie d'erreur (rouge)
+            try:
+                email.set_category(error_category)
+            except:
+                pass
         
         return result
     

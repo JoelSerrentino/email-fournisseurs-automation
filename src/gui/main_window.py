@@ -861,16 +861,16 @@ class MainWindow:
             )
             
             # Récupérer les paramètres
-            keywords = [k.strip() for k in self.keywords_var.get().split(',') if k.strip()]
+            keywords_str = self.keywords_var.get()
             mailbox_name = self.mailbox_var.get()
-            destination_folder = self.outlook_folder_var.get() if self.outlook_folder_var.get() else None
-            category = self.category_var.get() if self.category_var.get() else None
+            target_folder_path = self.outlook_folder_var.get() if self.outlook_folder_var.get() else ""
+            category = self.category_var.get() if self.category_var.get() else ""
             
             # Lancer le traitement
             stats = self.email_processor.process_emails(
                 mailbox_name=mailbox_name,
-                keywords=keywords,
-                destination_folder=destination_folder,
+                keywords_str=keywords_str,
+                target_folder_path=target_folder_path,
                 category=category
             )
             

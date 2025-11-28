@@ -207,6 +207,36 @@ class EmailItem:
 class OutlookHandler:
     """Gestionnaire des interactions avec Outlook"""
     
+    # Constantes pour les couleurs de catégories Outlook
+    # https://docs.microsoft.com/en-us/office/vba/api/outlook.olcategorycolor
+    CATEGORY_COLORS = {
+        'red': 1,        # olCategoryColorRed
+        'orange': 2,     # olCategoryColorOrange
+        'peach': 3,      # olCategoryColorPeach
+        'yellow': 4,     # olCategoryColorYellow
+        'green': 5,      # olCategoryColorGreen
+        'teal': 6,       # olCategoryColorTeal
+        'olive': 7,      # olCategoryColorOlive
+        'blue': 8,       # olCategoryColorBlue
+        'purple': 9,     # olCategoryColorPurple
+        'maroon': 10,    # olCategoryColorMaroon
+        'steel': 11,     # olCategoryColorSteel
+        'darksteel': 12, # olCategoryColorDarkSteel
+        'gray': 13,      # olCategoryColorGray
+        'darkgray': 14,  # olCategoryColorDarkGray
+        'black': 15,     # olCategoryColorBlack
+        'darkred': 16,   # olCategoryColorDarkRed
+        'darkorange': 17,# olCategoryColorDarkOrange
+        'darkpeach': 18, # olCategoryColorDarkPeach
+        'darkyellow': 19,# olCategoryColorDarkYellow
+        'darkgreen': 20, # olCategoryColorDarkGreen
+        'darkteal': 21,  # olCategoryColorDarkTeal
+        'darkolive': 22, # olCategoryColorDarkOlive
+        'darkblue': 23,  # olCategoryColorDarkBlue
+        'darkpurple': 24,# olCategoryColorDarkPurple
+        'darkmaroon': 25 # olCategoryColorDarkMaroon
+    }
+    
     def __init__(self):
         if not OUTLOOK_AVAILABLE:
             raise OutlookError("pywin32 n'est pas installé. Installez-le avec: pip install pywin32")
@@ -214,6 +244,7 @@ class OutlookHandler:
         self._outlook = None
         self._namespace = None
         self._connected = False
+        self._categories_created = set()  # Cache des catégories créées
     
     def connect(self) -> bool:
         """
@@ -237,6 +268,50 @@ class OutlookHandler:
     def is_connected(self) -> bool:
         """Vérifie si la connexion est active"""
         return self._connected and self._outlook is not None
+    
+    def ensure_category_exists(self, category_name: str, color: str = 'green'):
+        """
+        S'assure qu'une catégorie existe avec la couleur spécifiée.
+        Crée la catégorie si elle n'existe pas.
+        
+        Args:
+            category_name: Nom de la catégorie
+            color: Couleur de la catégorie ('green', 'red', 'blue', etc.)
+        """
+        if not self.is_connected:
+            self.connect()
+        
+        # Vérifier le cache
+        cache_key = f"{category_name}_{color}"
+        if cache_key in self._categories_created:
+            return
+        
+        try:
+            categories = self._namespace.Categories
+            
+            # Vérifier si la catégorie existe déjà
+            category_exists = False
+            for cat in categories:
+                if cat.Name.lower() == category_name.lower():
+                    category_exists = True
+                    # Mettre à jour la couleur si différente
+                    color_code = self.CATEGORY_COLORS.get(color.lower(), 5)
+                    if cat.Color != color_code:
+                        cat.Color = color_code
+                        logger.debug(f"Couleur de la catégorie '{category_name}' mise à jour: {color}")
+                    break
+            
+            # Créer la catégorie si elle n'existe pas
+            if not category_exists:
+                color_code = self.CATEGORY_COLORS.get(color.lower(), 5)  # Vert par défaut
+                categories.Add(category_name, color_code)
+                logger.info(f"Catégorie '{category_name}' créée avec la couleur {color}")
+            
+            # Ajouter au cache
+            self._categories_created.add(cache_key)
+            
+        except com_error as e:
+            logger.warning(f"Impossible de créer/vérifier la catégorie '{category_name}': {e}")
     
     def get_mailboxes(self) -> List[str]:
         """

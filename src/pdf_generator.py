@@ -21,9 +21,11 @@ class PDFGenerator:
     """Générateur de fichiers PDF à partir d'emails et pièces jointes"""
     
     # Extensions supportées pour les pièces jointes
-    SUPPORTED_IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff']
+    SUPPORTED_IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp']
     SUPPORTED_PDF_EXTENSION = '.pdf'
     SUPPORTED_TEXT_EXTENSIONS = ['.txt', '.csv', '.log']
+    SUPPORTED_WORD_EXTENSIONS = ['.doc', '.docx']
+    SUPPORTED_EXCEL_EXTENSIONS = ['.xls', '.xlsx']
     
     def __init__(self, output_dir: str):
         """
@@ -61,6 +63,14 @@ class PDFGenerator:
         except ImportError:
             self._has_pillow = False
             logger.warning("Pillow non installé - images non supportées")
+        
+        # Vérifier si on peut convertir les documents Word (via COM Windows)
+        try:
+            import win32com.client
+            self._has_win32com = True
+        except ImportError:
+            self._has_win32com = False
+            logger.warning("pywin32 non installé - conversion Word/Excel limitée")
     
     def generate_email_pdf(self, sender: str, sender_name: str, subject: str,
                            body: str, received_time: Optional[datetime],
@@ -293,6 +303,22 @@ class PDFGenerator:
                         merger.append(temp_pdf)
                         temp_files.append(temp_pdf)
                         logger.debug(f"Image convertie: {os.path.basename(att_path)}")
+                
+                elif ext in self.SUPPORTED_WORD_EXTENSIONS and self._has_win32com:
+                    # Convertir le document Word en PDF
+                    temp_pdf = self._word_to_pdf(att_path)
+                    if temp_pdf:
+                        merger.append(temp_pdf)
+                        temp_files.append(temp_pdf)
+                        logger.debug(f"Document Word converti: {os.path.basename(att_path)}")
+                
+                elif ext in self.SUPPORTED_EXCEL_EXTENSIONS and self._has_win32com:
+                    # Convertir le document Excel en PDF
+                    temp_pdf = self._excel_to_pdf(att_path)
+                    if temp_pdf:
+                        merger.append(temp_pdf)
+                        temp_files.append(temp_pdf)
+                        logger.debug(f"Document Excel converti: {os.path.basename(att_path)}")
                         
                 elif ext in self.SUPPORTED_TEXT_EXTENSIONS:
                     # Convertir le texte en PDF
@@ -442,6 +468,148 @@ class PDFGenerator:
             logger.error(f"Erreur conversion texte: {e}")
             return None
     
+    def _word_to_pdf(self, word_path: str) -> Optional[str]:
+        """Convertit un document Word (.doc, .docx) en PDF via Microsoft Word"""
+        if not self._has_win32com:
+            logger.warning("pywin32 requis pour convertir les documents Word")
+            return None
+        
+        import win32com.client
+        from pywintypes import com_error
+        
+        word = None
+        doc = None
+        
+        try:
+            # Créer un fichier temporaire pour le PDF
+            temp_fd, temp_path = tempfile.mkstemp(suffix='.pdf')
+            os.close(temp_fd)
+            
+            # Convertir le chemin en absolu
+            word_path_abs = os.path.abspath(word_path)
+            temp_path_abs = os.path.abspath(temp_path)
+            
+            # Ouvrir Word
+            word = win32com.client.Dispatch("Word.Application")
+            word.Visible = False
+            word.DisplayAlerts = False
+            
+            # Ouvrir le document
+            doc = word.Documents.Open(word_path_abs, ReadOnly=True)
+            
+            # Exporter en PDF (17 = wdExportFormatPDF)
+            doc.ExportAsFixedFormat(
+                temp_path_abs,
+                17,  # wdExportFormatPDF
+                False,  # OpenAfterExport
+                0,  # wdExportOptimizeForPrint
+                0,  # Range = wdExportAllDocument
+                1,  # From
+                1,  # To
+                0,  # Item = wdExportDocumentContent
+                True,  # IncludeDocProps
+                True,  # KeepIRM
+                0  # CreateBookmarks = wdExportCreateNoBookmarks
+            )
+            
+            logger.debug(f"Word converti en PDF: {os.path.basename(word_path)}")
+            return temp_path
+            
+        except com_error as e:
+            logger.error(f"Erreur COM lors de la conversion Word: {e}")
+            # Nettoyer le fichier temporaire si créé
+            if os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                except OSError:
+                    pass
+            return None
+            
+        except Exception as e:
+            logger.error(f"Erreur conversion Word: {e}")
+            return None
+            
+        finally:
+            # Fermer proprement
+            try:
+                if doc:
+                    doc.Close(False)
+            except:
+                pass
+            try:
+                if word:
+                    word.Quit()
+            except:
+                pass
+    
+    def _excel_to_pdf(self, excel_path: str) -> Optional[str]:
+        """Convertit un document Excel (.xls, .xlsx) en PDF via Microsoft Excel"""
+        if not self._has_win32com:
+            logger.warning("pywin32 requis pour convertir les documents Excel")
+            return None
+        
+        import win32com.client
+        from pywintypes import com_error
+        
+        excel = None
+        workbook = None
+        temp_path = None
+        
+        try:
+            # Créer un fichier temporaire pour le PDF
+            temp_fd, temp_path = tempfile.mkstemp(suffix='.pdf')
+            os.close(temp_fd)
+            
+            # Convertir le chemin en absolu (utiliser des chemins normalisés pour Windows)
+            excel_path_abs = os.path.normpath(os.path.abspath(excel_path))
+            temp_path_abs = os.path.normpath(os.path.abspath(temp_path))
+            
+            # Ouvrir Excel
+            excel = win32com.client.Dispatch("Excel.Application")
+            excel.Visible = False
+            excel.DisplayAlerts = False
+            
+            # Ouvrir le classeur
+            workbook = excel.Workbooks.Open(excel_path_abs, ReadOnly=True)
+            
+            # Exporter en PDF - syntaxe simplifiée
+            # Type=0 (xlTypePDF), Filename, Quality=0 (xlQualityStandard)
+            workbook.ExportAsFixedFormat(
+                Type=0,  # xlTypePDF
+                Filename=temp_path_abs,
+                Quality=0  # xlQualityStandard
+            )
+            
+            logger.debug(f"Excel converti en PDF: {os.path.basename(excel_path)}")
+            return temp_path
+            
+        except com_error as e:
+            logger.error(f"Erreur COM lors de la conversion Excel: {e}")
+            # Nettoyer le fichier temporaire si créé
+            if temp_path and os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                except OSError:
+                    pass
+            return None
+            
+        except Exception as e:
+            logger.error(f"Erreur conversion Excel: {e}")
+            return None
+            
+        finally:
+            # Fermer proprement
+            try:
+                if workbook:
+                    workbook.Close(False)
+            except:
+                pass
+            try:
+                if excel:
+                    excel.Quit()
+            except:
+                pass
+
     def generate_pdf(self, company_name: str, date: str, 
                      email_contents: List[str], attachments: List[str]) -> str:
         """
