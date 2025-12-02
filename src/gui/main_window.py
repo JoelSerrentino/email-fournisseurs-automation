@@ -208,13 +208,14 @@ class MainWindow:
     def create_header(self):
         """Crée l'en-tête de l'application"""
         self.header_frame = tk.Frame(self.master, bg=self.COLORS['bg_dark'])
-        self.header_frame.grid(row=0, column=0, sticky='ew', padx=20, pady=(15, 10))
+        self.header_frame.grid(row=0, column=0, sticky='ew', padx=5, pady=(15, 10))
         self.header_frame.grid_columnconfigure(0, weight=1)
         self.header_frame.grid_columnconfigure(1, weight=0)
+        self.header_frame.grid_columnconfigure(2, weight=0)
         
         # Icône et titre
         title_frame = tk.Frame(self.header_frame, bg=self.COLORS['bg_dark'])
-        title_frame.grid(row=0, column=0, sticky='w')
+        title_frame.grid(row=0, column=0, sticky='w', padx=(15, 0))
         
         self.title_label = tk.Label(title_frame, 
                                text="📧 Email Fournisseurs",
@@ -230,16 +231,41 @@ class MainWindow:
                                   fg=self.COLORS['text_secondary'])
         self.subtitle_label.pack(anchor=tk.W)
         
-        # Badge de statut
-        status_frame = tk.Frame(self.header_frame, bg=self.COLORS['bg_dark'])
-        status_frame.grid(row=0, column=1, sticky='e')
+        # Container pour statut et aide (aligné avec les cartes)
+        right_frame = tk.Frame(self.header_frame, bg=self.COLORS['bg_dark'])
+        right_frame.grid(row=0, column=1, columnspan=2, sticky='e', padx=(10, 20))
         
-        self.status_indicator = tk.Label(status_frame,
+        # Badge de statut
+        self.status_indicator = tk.Label(right_frame,
                                          text="● Prêt",
                                          font=('Segoe UI', 10),
                                          bg=self.COLORS['bg_dark'],
                                          fg=self.COLORS['success'])
-        self.status_indicator.pack()
+        self.status_indicator.pack(side='left', padx=(0, 10))
+        
+        # Bouton Aide
+        help_btn = tk.Button(right_frame,
+                            text="❓ Aide",
+                            command=self.show_help,
+                            font=('Segoe UI', 10),
+                            bg=self.COLORS['accent'],
+                            fg='white',
+                            activebackground=self.COLORS['accent_hover'],
+                            activeforeground='white',
+                            relief='flat',
+                            padx=15,
+                            pady=6,
+                            cursor='hand2',
+                            borderwidth=0)
+        help_btn.pack(side='left')
+        
+        # Effet hover
+        def on_enter(e):
+            help_btn.configure(bg=self.COLORS['accent_hover'])
+        def on_leave(e):
+            help_btn.configure(bg=self.COLORS['accent'])
+        help_btn.bind('<Enter>', on_enter)
+        help_btn.bind('<Leave>', on_leave)
 
     def create_main_content(self):
         """Crée le contenu principal avec scroll"""
@@ -1144,6 +1170,168 @@ class MainWindow:
             self.email_processor.stop()
             self.log("Arrêt demandé...", "warning")
             self.progress_text_var.set("Arrêt en cours...")
+    
+    def show_help(self):
+        """Affiche la fenêtre d'aide avec le mode d'emploi"""
+        help_window = tk.Toplevel(self.master)
+        help_window.title("Aide - Email Fournisseurs Automation")
+        help_window.geometry("700x600")
+        help_window.configure(bg=self.COLORS['bg_dark'])
+        help_window.resizable(True, True)
+        
+        # Centrer la fenêtre
+        help_window.transient(self.master)
+        help_window.grab_set()
+        
+        # Frame principal avec scroll
+        main_frame = tk.Frame(help_window, bg='white')
+        main_frame.pack(fill='both', expand=True, padx=1, pady=1)
+        
+        # Canvas pour le scroll
+        canvas = tk.Canvas(main_frame, bg='white', highlightthickness=0)
+        scrollbar = ttk.Scrollbar(main_frame, orient='vertical', command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas, bg='white')
+        
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=scrollable_frame, anchor='nw')
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        canvas.pack(side='left', fill='both', expand=True)
+        scrollbar.pack(side='right', fill='y')
+        
+        # Contenu de l'aide
+        content = tk.Frame(scrollable_frame, bg='white', padx=30, pady=20)
+        content.pack(fill='both', expand=True)
+        
+        # Titre
+        tk.Label(content, text="📖 Mode d'emploi", 
+                font=('Segoe UI', 18, 'bold'),
+                bg='white', fg=self.COLORS['text']).pack(anchor='w', pady=(0, 20))
+        
+        help_text = """
+CONFIGURATION OUTLOOK
+
+1. Boîte aux lettres
+   - Cliquez sur "Sélectionner" pour choisir la boîte aux lettres Outlook
+   - Sélectionnez dans la liste qui apparaît
+
+2. Dossier destination
+   - Cliquez sur "Sélectionner" pour choisir où déplacer les emails traités
+   - Naviguez dans l'arborescence de vos dossiers Outlook
+
+3. Catégorie après traitement
+   - Entrez le nom de la catégorie à appliquer aux emails réussis
+   - Une catégorie verte sera créée automatiquement
+   - Les emails en erreur recevront une catégorie rouge "Erreur traitement"
+
+
+FILTRAGE DES EMAILS
+
+4. Mots clés
+   - Entrez les mots clés à rechercher dans l'objet des emails
+   - Séparez-les par des virgules : facture, commande, livraison
+   - La recherche n'est pas sensible à la casse
+
+5. Période (optionnel)
+   - Cliquez sur la flèche pour ouvrir le calendrier
+   - Du : Date de début de la période
+   - Au : Date de fin de la période
+   - Laissez vide pour ne pas filtrer par date
+   - Cliquez sur X pour effacer une date
+
+
+DOSSIER DE SORTIE
+
+6. Dossier de sortie
+   - Cliquez sur "Parcourir" pour choisir où enregistrer les PDF
+   - Les fichiers seront nommés : [Expéditeur]_[Date]_[Objet].pdf
+
+
+SAUVEGARDE
+
+7. Bouton "Sauvegarder"
+   - Enregistre tous vos paramètres pour la prochaine utilisation
+   - Les paramètres sont chargés automatiquement au démarrage
+
+
+TRAITEMENT
+
+8. Bouton "Lancer le traitement"
+   - Vérifie que tous les champs obligatoires sont remplis
+   - Traite tous les emails correspondant aux critères
+   - Affiche la progression en temps réel
+   - Génère un PDF par email (contenu + pièces jointes)
+
+9. Bouton "Arrêter"
+   - Interrompt le traitement en cours
+   - Les emails déjà traités sont conservés
+
+
+TYPES DE PIÈCES JOINTES SUPPORTÉS
+
+> PDF : Fusion directe
+> Images : PNG, JPG, JPEG, GIF, BMP, TIFF, WEBP
+> Word : DOC, DOCX (nécessite Microsoft Word)
+> Excel : XLS, XLSX (nécessite Microsoft Excel)
+> Texte : TXT, CSV, LOG
+
+
+JOURNAL D'ACTIVITÉ
+
+Le journal affiche en temps réel :
+   - Info : Informations générales
+   - Succès : Actions réussies
+   - Avertissement : Actions avec attention
+   - Erreur : Échecs et problèmes
+
+
+CONSEILS
+
+- Testez d'abord avec un petit nombre d'emails
+- Vérifiez que Microsoft Outlook est ouvert
+- Pour Word/Excel : Microsoft Office doit être installé
+- Les emails traités gardent une copie de sauvegarde
+- Consultez le journal pour les détails des erreurs
+        """
+        
+        tk.Label(content, text=help_text,
+                font=('Segoe UI', 10),
+                bg='white', fg=self.COLORS['text'],
+                justify='left', anchor='w').pack(fill='both')
+        
+        # Bouton Fermer
+        btn_frame = tk.Frame(help_window, bg=self.COLORS['bg_dark'], pady=15)
+        btn_frame.pack(fill='x')
+        
+        close_btn = tk.Button(btn_frame,
+                             text="Fermer",
+                             command=help_window.destroy,
+                             font=('Segoe UI', 10, 'bold'),
+                             bg=self.COLORS['accent'],
+                             fg='white',
+                             activebackground=self.COLORS['accent_hover'],
+                             activeforeground='white',
+                             relief='flat',
+                             padx=30,
+                             pady=10,
+                             cursor='hand2')
+        close_btn.pack()
+        
+        # Scroll avec molette
+        def on_mousewheel(event):
+            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+        canvas.bind_all('<MouseWheel>', on_mousewheel)
+        
+        # Nettoyer le binding quand la fenêtre se ferme
+        def on_closing():
+            canvas.unbind_all('<MouseWheel>')
+            help_window.destroy()
+        
+        help_window.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 if __name__ == "__main__":
