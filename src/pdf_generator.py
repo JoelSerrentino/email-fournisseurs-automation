@@ -296,13 +296,9 @@ class PDFGenerator:
                     merger.append(att_path)
                     logger.debug(f"PDF ajouté: {os.path.basename(att_path)}")
                     
-                elif ext in self.SUPPORTED_IMAGE_EXTENSIONS and self._has_pillow:
-                    # Convertir l'image en PDF
-                    temp_pdf = self._image_to_pdf(att_path)
-                    if temp_pdf:
-                        merger.append(temp_pdf)
-                        temp_files.append(temp_pdf)
-                        logger.debug(f"Image convertie: {os.path.basename(att_path)}")
+                elif ext in self.SUPPORTED_IMAGE_EXTENSIONS:
+                    # Ne pas intégrer les images
+                    logger.debug(f"Image ignorée (non intégrée): {os.path.basename(att_path)}")
                 
                 elif ext in self.SUPPORTED_WORD_EXTENSIONS and self._has_win32com:
                     # Convertir le document Word en PDF
