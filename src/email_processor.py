@@ -384,13 +384,19 @@ class EmailProcessor:
             if self._check_stop():
                 result.status = ProcessingStatus.SKIPPED
                 return result
+            
+            # Récupérer received_time avec protection contre les erreurs win32timezone
+            try:
+                received_time = email.received_time
+            except Exception:
+                received_time = None
                 
             pdf_path = self.pdf_generator.generate_email_pdf(
                 sender=email.sender,
                 sender_name=email.sender_name,
                 subject=email.subject,
                 body=email.body,
-                received_time=email.received_time,
+                received_time=received_time,
                 attachment_paths=attachment_paths
             )
             result.pdf_path = pdf_path
@@ -440,7 +446,8 @@ class EmailProcessor:
             # Appliquer la catégorie d'erreur (rouge)
             try:
                 email.set_category(error_category)
-            except:
+            except Exception:
+                # Ignorer les erreurs lors de la définition de la catégorie
                 pass
         
         return result

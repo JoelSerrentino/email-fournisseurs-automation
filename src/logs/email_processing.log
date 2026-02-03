@@ -60,3 +60,70 @@
 2025-11-28 09:35:44 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
 2025-11-28 09:35:44 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
 2025-11-28 09:35:44 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2026-02-03 11:59:33 - INFO - Application started.
+2026-02-03 12:01:44 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:01:44 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:01:44 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2026-02-03 12:02:50 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:02:50 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:02:50 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2026-02-03 12:03:03 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:03:03 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:03:03 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2026-02-03 12:03:26 - ERROR - Impossible de se connecter à Outlook: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:03:26 - ERROR - Connexion Outlook échouée: Connexion Outlook échouée: (-2147221008, 'CoInitialize n’a pas été appelé.', None, None)
+2026-02-03 12:03:26 - ERROR - Erreur lors du traitement: Impossible de se connecter à Outlook
+2026-02-03 12:06:17 - INFO - Connexion à Outlook établie
+2026-02-03 12:06:18 - INFO - Catégorie 'Ticket Réarchivé' créée avec la couleur green
+2026-02-03 12:06:18 - INFO - Catégorie 'Erreur traitement' créée avec la couleur red
+2026-02-03 12:06:18 - INFO - Mots clés: Ticket résolu
+2026-02-03 12:06:18 - INFO - Dossier cible: \\J.SERRENTINO@lancy.ch\Boîte de réception\Test
+2026-02-03 12:06:18 - INFO - Filtrage depuis: 26/01/2026
+2026-02-03 12:06:18 - INFO - Filtrage jusqu'à: 28/01/2026
+2026-02-03 12:06:26 - INFO - 0 email(s) correspondant(s) trouvé(s)
+2026-02-03 12:06:26 - INFO - Aucun email correspondant trouvé
+2026-02-03 12:07:47 - INFO - Connexion à Outlook établie
+2026-02-03 12:07:47 - INFO - Mots clés: Ticket résolu
+2026-02-03 12:07:47 - INFO - Dossier cible: \\J.SERRENTINO@lancy.ch\Boîte de réception\Tickets résolus
+2026-02-03 12:07:47 - INFO - Filtrage depuis: 26/01/2026
+2026-02-03 12:07:47 - INFO - Filtrage jusqu'à: 28/01/2026
+2026-02-03 12:07:55 - INFO - 0 email(s) correspondant(s) trouvé(s)
+2026-02-03 12:07:55 - INFO - Aucun email correspondant trouvé
+2026-02-03 12:08:56 - INFO - Connexion à Outlook établie
+2026-02-03 12:08:56 - INFO - Mots clés: Ticket résolu
+2026-02-03 12:08:57 - INFO - Dossier cible: \\J.SERRENTINO@lancy.ch\Boîte de réception\Tickets résolus
+2026-02-03 12:08:57 - DEBUG - Email correspondant trouvé: [GLPI #0039256] Lancy | Ticket résolu : Accès à An
+2026-02-03 12:08:57 - DEBUG - Email correspondant trouvé: [GLPI #0038149] Lancy | Ticket résolu : Microsoft 
+2026-02-03 12:08:57 - DEBUG - Email correspondant trouvé: [GLPI #0038257] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:08:57 - DEBUG - Email correspondant trouvé: [GLPI #0037651] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:08:58 - DEBUG - Email correspondant trouvé: [GLPI #0032985] Lancy | Ticket résolu : merci de n
+2026-02-03 12:09:06 - INFO - 5 email(s) correspondant(s) trouvé(s)
+2026-02-03 12:09:06 - INFO - 5 email(s) à traiter
+2026-02-03 12:09:06 - INFO - Traitement: [GLPI #0039256] Lancy | Ticket résolu : Accès à An
+2026-02-03 12:09:06 - INFO - PDF généré: SIACG - Support_20260130_[GLPI #0039256] Lancy _ Ticket résolu _ Accès à An.pdf
+2026-02-03 12:09:06 - DEBUG - Catégorie 'Ticket [Cloturé]' appliquée à: [GLPI #0039256] Lancy | Ticket résolu : Accès à An
+2026-02-03 12:09:08 - DEBUG - Email déplacé: [GLPI #0039256] Lancy | Ticket résolu : Accès à An
+2026-02-03 12:09:08 - INFO - Email traité avec succès: [GLPI #0039256] Lancy | Ticket résolu : 
+2026-02-03 12:09:08 - INFO - Traitement: [GLPI #0038149] Lancy | Ticket résolu : Microsoft 
+2026-02-03 12:09:08 - INFO - PDF généré: SIACG - Support_20260115_[GLPI #0038149] Lancy _ Ticket résolu _ Microsoft.pdf
+2026-02-03 12:09:09 - DEBUG - Catégorie 'Ticket [Cloturé]' appliquée à: [GLPI #0038149] Lancy | Ticket résolu : Microsoft 
+2026-02-03 12:09:10 - DEBUG - Email déplacé: [GLPI #0038149] Lancy | Ticket résolu : Microsoft 
+2026-02-03 12:09:10 - INFO - Email traité avec succès: [GLPI #0038149] Lancy | Ticket résolu : 
+2026-02-03 12:09:10 - INFO - Traitement: [GLPI #0038257] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:09:11 - INFO - PDF généré: SIACG - Support_20260114_[GLPI #0038257] Lancy _ Ticket résolu _ Messagerie.pdf
+2026-02-03 12:09:11 - DEBUG - Catégorie 'Ticket [Cloturé]' appliquée à: [GLPI #0038257] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:09:12 - DEBUG - Email déplacé: [GLPI #0038257] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:09:12 - INFO - Email traité avec succès: [GLPI #0038257] Lancy | Ticket résolu : 
+2026-02-03 12:09:13 - INFO - Traitement: [GLPI #0037651] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:09:13 - INFO - PDF généré: SIACG - Support_20260106_[GLPI #0037651] Lancy _ Ticket résolu _ Messagerie.pdf
+2026-02-03 12:09:13 - DEBUG - Catégorie 'Ticket [Cloturé]' appliquée à: [GLPI #0037651] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:09:14 - DEBUG - Email déplacé: [GLPI #0037651] Lancy | Ticket résolu : Messagerie
+2026-02-03 12:09:14 - INFO - Email traité avec succès: [GLPI #0037651] Lancy | Ticket résolu : 
+2026-02-03 12:09:15 - INFO - Traitement: [GLPI #0032985] Lancy | Ticket résolu : merci de n
+2026-02-03 12:09:16 - DEBUG - Pièce jointe sauvegardée: C:\Users\SERREN~1\AppData\Local\Temp\email_fournisseurs_lix_64qf\email_20260203120915898622\image_paste8991519.png
+2026-02-03 12:09:16 - DEBUG - 1 pièce(s) jointe(s) sauvegardée(s)
+2026-02-03 12:09:16 - DEBUG - Image ignorée (non intégrée): image_paste8991519.png
+2026-02-03 12:09:16 - DEBUG - Catégorie 'Ticket [Cloturé]' appliquée à: [GLPI #0032985] Lancy | Ticket résolu : merci de n
+2026-02-03 12:09:17 - DEBUG - Email déplacé: [GLPI #0032985] Lancy | Ticket résolu : merci de n
+2026-02-03 12:09:17 - INFO - Email traité avec succès: [GLPI #0032985] Lancy | Ticket résolu : 
+2026-02-03 12:09:17 - INFO - Traitement terminé: 5/5 succès, 0 échec(s)

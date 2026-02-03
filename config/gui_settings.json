@@ -1,9 +1,9 @@
 {
-    "mailbox": "Test informatique Lancy",
-    "keywords": "facture",
+    "mailbox": "J.SERRENTINO@lancy.ch",
+    "keywords": "Ticket résolu",
     "output_folder": "C:/Test informatique Lancy (BAL)/Emails PDFs",
-    "outlook_folder": "\\\\Test informatique Lancy\\Boîte de réception\\Fournisseurs",
-    "category": "Succès",
+    "outlook_folder": "\\\\J.SERRENTINO@lancy.ch\\Boîte de réception\\Tickets résolus",
+    "category": "Ticket [Cloturé]",
     "date_from": "",
     "date_to": ""
 }

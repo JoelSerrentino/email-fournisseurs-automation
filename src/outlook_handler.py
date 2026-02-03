@@ -8,6 +8,13 @@ import tempfile
 from typing import List, Optional, Callable, Any
 from datetime import datetime
 
+# Précharger les DLLs win32 pour éviter les problèmes d'importation
+try:
+    from win32_loader import load_win32_dlls
+    load_win32_dlls()
+except ImportError:
+    pass
+
 try:
     import win32com.client
     from pywintypes import com_error
@@ -60,7 +67,10 @@ class EmailItem:
         """Date/heure de réception"""
         try:
             return self._mail.ReceivedTime
-        except com_error:
+        except (com_error, ImportError, ModuleNotFoundError):
+            return None
+        except Exception:
+            # Capturer toutes les autres erreurs (inclut les erreurs win32timezone)
             return None
     
     @property
