@@ -276,13 +276,11 @@ class PDFGenerator:
         
         # Créer le merger
         merger = PyPDF2.PdfMerger()
-        
-        # Ajouter le PDF de l'email
-        merger.append(email_pdf_path)
-        
-        # Traiter chaque pièce jointe
+
+        # Traiter chaque pièce jointe et conserver les PDFs à ajouter
         temp_files = []
-        
+        processed_att_paths: List[str] = []
+
         for att_path in attachment_paths:
             if not os.path.exists(att_path):
                 logger.warning(f"Pièce jointe introuvable: {att_path}")
@@ -292,9 +290,9 @@ class PDFGenerator:
             
             try:
                 if ext == self.SUPPORTED_PDF_EXTENSION:
-                    # Ajouter directement le PDF
-                    merger.append(att_path)
-                    logger.debug(f"PDF ajouté: {os.path.basename(att_path)}")
+                    # Marquer pour ajout (les pièces jointes seront ajoutées avant l'email)
+                    processed_att_paths.append(att_path)
+                    logger.debug(f"PDF ajouté à la liste: {os.path.basename(att_path)}")
                     
                 elif ext in self.SUPPORTED_IMAGE_EXTENSIONS:
                     # Ne pas intégrer les images
@@ -304,7 +302,7 @@ class PDFGenerator:
                     # Convertir le document Word en PDF
                     temp_pdf = self._word_to_pdf(att_path)
                     if temp_pdf:
-                        merger.append(temp_pdf)
+                        processed_att_paths.append(temp_pdf)
                         temp_files.append(temp_pdf)
                         logger.debug(f"Document Word converti: {os.path.basename(att_path)}")
                 
@@ -312,7 +310,7 @@ class PDFGenerator:
                     # Convertir le document Excel en PDF
                     temp_pdf = self._excel_to_pdf(att_path)
                     if temp_pdf:
-                        merger.append(temp_pdf)
+                        processed_att_paths.append(temp_pdf)
                         temp_files.append(temp_pdf)
                         logger.debug(f"Document Excel converti: {os.path.basename(att_path)}")
                         
@@ -320,7 +318,7 @@ class PDFGenerator:
                     # Convertir le texte en PDF
                     temp_pdf = self._text_to_pdf(att_path)
                     if temp_pdf:
-                        merger.append(temp_pdf)
+                        processed_att_paths.append(temp_pdf)
                         temp_files.append(temp_pdf)
                         logger.debug(f"Texte converti: {os.path.basename(att_path)}")
                 else:
@@ -329,23 +327,33 @@ class PDFGenerator:
             except Exception as e:
                 logger.error(f"Erreur traitement pièce jointe {att_path}: {e}")
         
+        # Ajouter d'abord les pièces jointes traitées, puis le PDF de l'email
+        for p in processed_att_paths:
+            try:
+                merger.append(p)
+            except Exception as e:
+                logger.error(f"Erreur ajout pièce jointe au merger: {p} => {e}")
+
+        # Enfin ajouter le PDF de l'email
+        merger.append(email_pdf_path)
+
         # Sauvegarder le PDF fusionné
         output_path = email_pdf_path.replace('.pdf', '_complet.pdf')
-        
+
         try:
             with open(output_path, 'wb') as output_file:
                 merger.write(output_file)
             merger.close()
-            
+
             # Nettoyer les fichiers temporaires
             for temp_file in temp_files:
                 try:
                     os.remove(temp_file)
                 except OSError:
                     pass
-            
+
             return output_path
-            
+
         except Exception as e:
             merger.close()
             logger.error(f"Erreur fusion PDF: {e}")
