@@ -223,7 +223,7 @@ class EmailProcessor:
         return [email.to_dict() for email in emails]
     
     def process_emails(self, mailbox_name: str, keywords_str: str,
-                       target_folder_path: str, category: str,
+                       target_folder_id: str, category: str,
                        unread_only: bool = False,
                        date_from: str = None, date_to: str = None) -> ProcessingStats:
         """
@@ -232,7 +232,7 @@ class EmailProcessor:
         Args:
             mailbox_name: Nom de la boîte aux lettres
             keywords_str: Mots clés séparés par des virgules
-            target_folder_path: Chemin du dossier Outlook destination
+            target_folder_id: EntryID du dossier Outlook destination
             category: Catégorie à appliquer après traitement (succès)
             unread_only: Filtrer uniquement les non lus
             date_from: Date de début (format JJ/MM/AAAA)
@@ -274,12 +274,12 @@ class EmailProcessor:
             
             logger.info(f"Mots clés: {', '.join(keywords)}")
             
-            # Récupérer le dossier cible
+            # Récupérer le dossier cible par EntryID
             target_folder = None
-            if target_folder_path:
+            if target_folder_id:
                 try:
-                    target_folder = self.outlook_handler.get_folder_by_path(target_folder_path)
-                    logger.info(f"Dossier cible: {target_folder_path}")
+                    target_folder = self.outlook_handler.get_folder_by_entry_id(target_folder_id)
+                    logger.info(f"Dossier cible sélectionné: {target_folder.Name}")
                 except OutlookError as e:
                     logger.warning(f"Dossier cible introuvable, les emails ne seront pas déplacés: {e}")
             
@@ -385,19 +385,14 @@ class EmailProcessor:
                 result.status = ProcessingStatus.SKIPPED
                 return result
             
-            # Récupérer received_time avec protection contre les erreurs win32timezone
-            try:
-                received_time = email.received_time
-            except Exception:
-                received_time = None
-                
             pdf_path = self.pdf_generator.generate_email_pdf(
                 sender=email.sender,
                 sender_name=email.sender_name,
                 subject=email.subject,
                 body=email.body,
-                received_time=received_time,
-                attachment_paths=attachment_paths
+                received_time=email.received_time,
+                attachment_paths=attachment_paths,
+                recipient=email.recipient
             )
             result.pdf_path = pdf_path
             
@@ -414,7 +409,10 @@ class EmailProcessor:
                 return result
                 
             if target_folder:
+                logger.debug(f"Déplacement de l'email vers le dossier cible")
                 email.move_to(target_folder)
+            else:
+                logger.debug(f"Aucun dossier cible défini, email non déplacé")
             
             result.status = ProcessingStatus.SUCCESS
             logger.success(f"Email traité avec succès: {email.subject[:40]}")

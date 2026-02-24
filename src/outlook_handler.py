@@ -5,6 +5,7 @@ Utilise l'API COM Windows via pywin32.
 
 import os
 import tempfile
+import threading
 from typing import List, Optional, Callable, Any
 from datetime import datetime
 
@@ -17,11 +18,14 @@ except ImportError:
 
 try:
     import win32com.client
+    import pythoncom
     from pywintypes import com_error
+    import win32timezone  # Charger win32timezone explicitement
     OUTLOOK_AVAILABLE = True
 except ImportError:
     OUTLOOK_AVAILABLE = False
     com_error = Exception
+    pythoncom = None
 
 from utils.logger import logger
 
@@ -55,6 +59,14 @@ class EmailItem:
             return ""
     
     @property
+    def recipient(self) -> str:
+        """Adresse(s) du destinataire (To)"""
+        try:
+            return self._mail.To or ""
+        except com_error:
+            return ""
+    
+    @property
     def sender_name(self) -> str:
         """Nom de l'expéditeur"""
         try:
@@ -66,12 +78,76 @@ class EmailItem:
     def received_time(self) -> Optional[datetime]:
         """Date/heure de réception"""
         try:
-            return self._mail.ReceivedTime
-        except (com_error, ImportError, ModuleNotFoundError):
+            # Essayer les propriétés de date dans l'ordre
+            date_sources = [
+                (self._mail.SentOn, "SentOn"),
+                (self._mail.CreationTime, "CreationTime"),
+                (self._mail.ReceivedTime, "ReceivedTime"),
+            ]
+            
+            for date_prop, source_name in date_sources:
+                try:
+                    if date_prop is not None:
+                        logger.debug(f"Utilisation de {source_name}: {date_prop}")
+                        # Convertir en Python datetime
+                        if isinstance(date_prop, datetime):
+                            logger.debug(f"Date {source_name} déjà en datetime: {date_prop}")
+                            return date_prop
+                        else:
+                            # Essayer de convertir
+                            str_time = str(date_prop)
+                            logger.debug(f"Conversion de {source_name} en string: '{str_time}'")
+                            dt = self._parse_date_string(str_time)
+                            if dt:
+                                return dt
+                except Exception as e:
+                    logger.debug(f"{source_name} non disponible: {type(e).__name__}: {e}")
+                    continue
+            
+            # Aucune date trouvée
+            logger.debug("Aucune date de réception trouvée, utilisation de la date courante")
             return None
-        except Exception:
-            # Capturer toutes les autres erreurs (inclut les erreurs win32timezone)
+            
+        except Exception as e:
+            logger.debug(f"Erreur inattendue pour received_time: {type(e).__name__}: {e}")
             return None
+    
+    def _parse_date_string(self, date_str: str) -> Optional[datetime]:
+        """Parse une chaîne de date en datetime"""
+        if not date_str or not isinstance(date_str, str):
+            return None
+        
+        date_str = date_str.strip()
+        
+        # Formats à essayer
+        formats = [
+            '%Y-%m-%d %H:%M:%S',
+            '%m/%d/%Y %H:%M:%S',
+            '%d/%m/%Y %H:%M:%S',
+            '%Y-%m-%dT%H:%M:%S',
+            '%d.%m.%Y %H:%M:%S',
+            '%Y-%m-%d %I:%M:%S %p',
+            '%m/%d/%Y %I:%M:%S %p'
+        ]
+        
+        for fmt in formats:
+            try:
+                dt = datetime.strptime(date_str, fmt)
+                logger.debug(f"Date parsée avec succès ({fmt}): {dt}")
+                return dt
+            except ValueError:
+                continue
+        
+        # Essayer fromisoformat
+        try:
+            dt = datetime.fromisoformat(date_str)
+            logger.debug(f"Date parsée avec fromisoformat: {dt}")
+            return dt
+        except (ValueError, TypeError):
+            pass
+        
+        logger.debug(f"Impossible de parser la date: '{date_str}'")
+        return None
     
     @property
     def body(self) -> str:
@@ -194,10 +270,22 @@ class EmailItem:
             True si succès, False sinon
         """
         try:
+            if target_folder is None:
+                logger.warning(f"Tentative de déplacement vers un dossier None: {self.subject[:50]}")
+                return False
+            
+            logger.debug(f"Déplacement de l'email vers le dossier cible: {self.subject[:50]}")
             self._mail.Move(target_folder)
-            logger.debug(f"Email déplacé: {self.subject[:50]}")
+            logger.debug(f"Email déplacé avec succès: {self.subject[:50]}")
             return True
         except com_error as e:
+            logger.error(f"Erreur déplacement email: {e}")
+            logger.debug(f"Email non déplacé: {self.subject[:50]}")
+            return False
+        except Exception as e:
+            logger.error(f"Erreur inattendue déplacement: {e}")
+            logger.debug(f"Email non déplacé: {self.subject[:50]}")
+            return False
             logger.error(f"Erreur déplacement email: {e}")
             return False
     
@@ -259,11 +347,21 @@ class OutlookHandler:
     def connect(self) -> bool:
         """
         Établit la connexion avec Outlook.
-        
+
         Returns:
             True si la connexion est établie
         """
         try:
+            # Initialiser COM sur le thread actuel si disponible
+            if pythoncom:
+                try:
+                    pythoncom.CoInitializeEx(pythoncom.COINIT_MULTITHREADED)
+                except:
+                    try:
+                        pythoncom.CoInitialize()
+                    except:
+                        pass
+            
             self._outlook = win32com.client.Dispatch("Outlook.Application")
             self._namespace = self._outlook.GetNamespace("MAPI")
             self._connected = True
@@ -297,6 +395,16 @@ class OutlookHandler:
             return
         
         try:
+            # Initialiser COM si nécessaire
+            if pythoncom:
+                try:
+                    pythoncom.CoInitializeEx(pythoncom.COINIT_MULTITHREADED)
+                except:
+                    try:
+                        pythoncom.CoInitialize()
+                    except:
+                        pass
+            
             categories = self._namespace.Categories
             
             # Vérifier si la catégorie existe déjà
@@ -322,6 +430,8 @@ class OutlookHandler:
             
         except com_error as e:
             logger.warning(f"Impossible de créer/vérifier la catégorie '{category_name}': {e}")
+        except Exception as e:
+            logger.warning(f"Erreur lors de la gestion des catégories '{category_name}': {e}")
     
     def get_mailboxes(self) -> List[str]:
         """
@@ -398,24 +508,38 @@ class OutlookHandler:
         if not self.is_connected:
             self.connect()
         
+        # Vérifier si c'est un chemin UNC (réseau) et non un chemin Outlook
+        if folder_path.startswith('\\\\') and ':' not in folder_path:
+            # C'est probablement un chemin UNC, pas un chemin Outlook
+            logger.warning(f"Le chemin '{folder_path}' semble être un chemin UNC (réseau), pas un chemin Outlook. "
+                          f"Veuillez sélectionner un dossier Outlook valide avec le sélecteur de dossier.")
+            logger.error(f"Dossier introuvable: {folder_path}")
+            raise OutlookError(f"Dossier '{folder_path}' introuvable")
+        
         try:
             # Nettoyer le chemin
             path_parts = [p for p in folder_path.split('\\') if p]
+            
+            logger.debug(f"Chemin Outlook à chercher: {path_parts}")
             
             if not path_parts:
                 raise OutlookError("Chemin de dossier vide")
             
             # Premier élément = boîte aux lettres
+            logger.debug(f"Cherche boîte aux lettres: {path_parts[0]}")
             current = self._namespace.Folders[path_parts[0]]
             
             # Parcourir les sous-dossiers
             for part in path_parts[1:]:
+                logger.debug(f"Cherche sous-dossier: {part}")
                 current = current.Folders[part]
             
+            logger.debug(f"Dossier trouvé: {folder_path}")
             return current
             
         except com_error as e:
             logger.error(f"Dossier introuvable: {folder_path}")
+            logger.debug(f"Erreur COM: {e}")
             raise OutlookError(f"Dossier '{folder_path}' introuvable")
     
     def pick_folder(self):
@@ -423,15 +547,38 @@ class OutlookHandler:
         Ouvre le sélecteur de dossier Outlook natif.
         
         Returns:
-            Objet dossier sélectionné ou None
+            Tuple (EntryID, FolderPath) ou (None, None) si annulé
         """
         if not self.is_connected:
             self.connect()
         
         try:
-            return self._namespace.PickFolder()
+            folder = self._namespace.PickFolder()
+            if folder:
+                return folder.EntryID, folder.Name
+            return None, None
         except com_error:
-            return None
+            return None, None
+    
+    def get_folder_by_entry_id(self, entry_id: str):
+        """
+        Récupère un dossier par son EntryID.
+        
+        Args:
+            entry_id: EntryID unique du dossier Outlook
+        
+        Returns:
+            Objet dossier Outlook
+        """
+        if not self.is_connected:
+            self.connect()
+        
+        try:
+            return self._namespace.GetFolderFromID(entry_id)
+        except com_error as e:
+            logger.error(f"Dossier introuvable avec EntryID: {entry_id}")
+            logger.debug(f"Erreur COM: {e}")
+            raise OutlookError(f"Dossier non trouvé")
     
     def filter_emails(self, mailbox_name: str, keywords: List[str], 
                       unread_only: bool = False,

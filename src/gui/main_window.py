@@ -80,6 +80,7 @@ class MainWindow:
         # État du traitement
         self.is_processing = False
         self.email_processor = None
+        self._outlook_folder_entry_id = None  # Stocke l'EntryID du dossier Outlook sélectionné
         
         # Configuration du layout responsive
         self.master.grid_rowconfigure(0, weight=0)  # Header
@@ -891,12 +892,18 @@ class MainWindow:
     def select_outlook_folder(self):
         """Sélectionne un dossier Outlook"""
         try:
-            import win32com.client
-            outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-            folder = outlook.PickFolder()
-            if folder:
-                self.outlook_folder_var.set(folder.FolderPath)
-                self.log(f"Dossier Outlook sélectionné: {folder.FolderPath}", "success")
+            from outlook_handler import OutlookHandler
+            handler = OutlookHandler()
+            handler.connect()
+            entry_id, folder_name = handler.pick_folder()
+            if entry_id:
+                # Stocker l'EntryID dans une variable interne
+                self._outlook_folder_entry_id = entry_id
+                # Afficher le nom du dossier à l'utilisateur
+                self.outlook_folder_var.set(folder_name)
+                self.log(f"Dossier Outlook sélectionné: {folder_name}", "success")
+            else:
+                self.log("Sélection annulée", "warning")
         except Exception as e:
             messagebox.showerror("Erreur", f"Impossible de sélectionner le dossier : {e}")
             self.log(f"Erreur sélection dossier: {e}", "error")
@@ -986,7 +993,8 @@ class MainWindow:
             "mailbox": self.mailbox_var.get(),
             "keywords": self.keywords_var.get(),
             "output_folder": self.output_folder_var.get(),
-            "outlook_folder": self.outlook_folder_var.get(),
+            "outlook_folder_entry_id": self._outlook_folder_entry_id or "",
+            "outlook_folder_name": self.outlook_folder_var.get(),
             "category": self.category_var.get(),
             "date_from": self.date_from_var.get(),
             "date_to": self.date_to_var.get()
@@ -1013,7 +1021,9 @@ class MainWindow:
                     self.mailbox_var.set(settings.get("mailbox", ""))
                     self.keywords_var.set(settings.get("keywords", ""))
                     self.output_folder_var.set(settings.get("output_folder", ""))
-                    self.outlook_folder_var.set(settings.get("outlook_folder", ""))
+                    # Charger l'EntryID et le nom du dossier
+                    self._outlook_folder_entry_id = settings.get("outlook_folder_entry_id", "")
+                    self.outlook_folder_var.set(settings.get("outlook_folder_name", ""))
                     self.category_var.set(settings.get("category", "Traité"))
                     self.date_from_var.set(settings.get("date_from", ""))
                     self.date_to_var.set(settings.get("date_to", ""))
@@ -1076,7 +1086,7 @@ class MainWindow:
             # Récupérer les paramètres
             keywords_str = self.keywords_var.get()
             mailbox_name = self.mailbox_var.get()
-            target_folder_path = self.outlook_folder_var.get() if self.outlook_folder_var.get() else ""
+            target_folder_id = self._outlook_folder_entry_id if self._outlook_folder_entry_id else ""
             category = self.category_var.get() if self.category_var.get() else ""
             date_from = self.date_from_var.get() if self.date_from_var.get() else None
             date_to = self.date_to_var.get() if self.date_to_var.get() else None
@@ -1085,7 +1095,7 @@ class MainWindow:
             stats = self.email_processor.process_emails(
                 mailbox_name=mailbox_name,
                 keywords_str=keywords_str,
-                target_folder_path=target_folder_path,
+                target_folder_id=target_folder_id,
                 category=category,
                 date_from=date_from,
                 date_to=date_to

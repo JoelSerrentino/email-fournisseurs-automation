@@ -68,12 +68,16 @@ pyinstaller --onefile --windowed `
     --add-data "config;config" `
     --hidden-import win32com.client `
     --hidden-import win32com.server `
+    --hidden-import win32timezone `
     --hidden-import pythoncom `
     --hidden-import pywintypes `
+    --hidden-import pytz `
     --hidden-import tkinter `
     --hidden-import tkinter.ttk `
     --hidden-import tkinter.filedialog `
     --hidden-import tkinter.messagebox `
+    --hidden-import tkinter.scrolledtext `
+    --hidden-import tkcalendar `
     --hidden-import PIL `
     --hidden-import PIL.Image `
     --hidden-import PIL.ImageDraw `

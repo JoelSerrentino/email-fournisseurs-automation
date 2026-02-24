@@ -74,7 +74,7 @@ class PDFGenerator:
     
     def generate_email_pdf(self, sender: str, sender_name: str, subject: str,
                            body: str, received_time: Optional[datetime],
-                           attachment_paths: List[str] = None) -> str:
+                           attachment_paths: List[str] = None, recipient: str = None) -> str:
         """
         Génère un PDF à partir d'un email et ses pièces jointes.
         
@@ -85,12 +85,16 @@ class PDFGenerator:
             body: Corps de l'email
             received_time: Date/heure de réception
             attachment_paths: Liste des chemins des pièces jointes
+            recipient: Adresse email du destinataire
         
         Returns:
             Chemin du fichier PDF généré
         """
         if not self._has_reportlab:
             raise PDFGeneratorError("reportlab est requis pour générer des PDF")
+        
+        # Logging de la date reçue
+        logger.debug(f"received_time type: {type(received_time)}, value: {received_time}")
         
         # Générer le nom de fichier
         filename = generate_pdf_filename(sender_name or sender, received_time, subject)
@@ -106,7 +110,7 @@ class PDFGenerator:
         try:
             # Créer le PDF de l'email
             email_pdf_path = self._create_email_pdf(
-                sender, sender_name, subject, body, received_time, output_path
+                sender, sender_name, subject, body, received_time, output_path, recipient
             )
             
             # Fusionner avec les pièces jointes si présentes
@@ -129,7 +133,7 @@ class PDFGenerator:
     
     def _create_email_pdf(self, sender: str, sender_name: str, subject: str,
                           body: str, received_time: Optional[datetime],
-                          output_path: str) -> str:
+                          output_path: str, recipient: str = None) -> str:
         """Crée un PDF à partir du contenu de l'email"""
         from reportlab.lib.pagesizes import A4
         from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -190,11 +194,21 @@ class PDFGenerator:
         elements.append(Spacer(1, 12))
         
         # Métadonnées de l'email
-        date_str = received_time.strftime('%d/%m/%Y à %H:%M') if received_time else "Date inconnue"
+        logger.debug(f"Formatage de received_time: {type(received_time)} = {received_time}")
+        if received_time:
+            try:
+                date_str = received_time.strftime('%d/%m/%Y à %H:%M')
+                logger.debug(f"Date formatée: {date_str}")
+            except Exception as e:
+                logger.debug(f"Erreur formatage date: {e}")
+                date_str = "Date inconnue"
+        else:
+            logger.debug("received_time est None")
+            date_str = "Date inconnue"
         
         meta_data = [
             ['De:', sender_name or sender],
-            ['Email:', sender],
+            ['À :', recipient or "(Non disponible)"],
             ['Sujet:', subject or "(Sans objet)"],
             ['Date:', date_str]
         ]
